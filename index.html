@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ayasofya Charity</title>
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Pi Network SDK -->
+  <link rel="stylesheet" href="style.css" />
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <script>
-    // SDK başlat
+    // Pi SDK başlatılıyor
     Pi.init({ version: "2.0" });
 
-    async function connectWallet() {
+    // Butona tıklanınca Pi Wallet bağlantısı
+    function connectWallet() {
       try {
-        const scopes = ["username", "payments"];
-        const user = await Pi.authenticate(scopes, onIncompletePaymentFound);
-        alert("Bağlantı başarılı! Hoş geldin, " + user.username);
+        Pi.authenticate(["username", "payments"], (auth) => {
+          alert("Bağlantı başarılı! Hoş geldin " + auth.user.username);
+        });
       } catch (error) {
-        alert("Bağlantı başarısız: " + error);
+        console.error("Bağlantı hatası:", error);
+        alert("Bağlantı kurulamadı. Lütfen Pi Browser üzerinden deneyin.");
       }
-    }
-
-    function onIncompletePaymentFound(payment) {
-      console.log("Eksik ödeme bulundu:", payment);
     }
   </script>
 </head>
-
 <body>
   <header>
-    <img src="images/file_0000000065e461fd989f950fa315eda7.png" alt="Ayasofya Logo" class="logo">
+    <img src="images/file_0000000065e461fd989f950fa315eda7.png" alt="Ayasofya Logo" class="logo" />
     <h1>Ayasofya Charity</h1>
-    <p class="subtitle">Pi Network üzerinden bağış yapabilirsiniz</p>
+    <p>Pi Network üzerinden bağış yapabilirsiniz</p>
   </header>
 
-  <section class="about">
-    <h2>Hakkımızda</h2>
-    <p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
-  </section>
+  <main>
+    <section class="about">
+      <h2>Hakkımızda</h2>
+      <p>
+        Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur.
+        Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.
+      </p>
+    </section>
 
-  <section class="donate">
-    <h2>Bağış Yap</h2>
-    <p>Bağışlarınızı Pi Wallet üzerinden gerçekleştirebilirsiniz.</p>
-    <button class="donate-button" onclick="connectWallet()">Pi Wallet ile Bağlan</button>
-  </section>
+    <section class="donate">
+      <h2>Bağış Yap</h2>
+      <p>Bağışlarınızı Pi Wallet üzerinden gerçekleştirebilirsiniz.</p>
+      <button onclick="connectWallet()">Pi Wallet ile Bağlan</button>
+    </section>
+  </main>
 
   <footer>
-    <p>© 2025 Ayasofya Charity | Tüm hakları saklıdır</p>
+    <p>© 2025 Ayasofya Charity | Tüm hakları saklıdır.</p>
   </footer>
 </body>
 </html>
