@@ -5,7 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayasofya Charity</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Pi Network SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script>
+    // SDK başlat
+    Pi.init({ version: "2.0" });
+
+    async function connectWallet() {
+      try {
+        const scopes = ["username", "payments"];
+        const user = await Pi.authenticate(scopes, onIncompletePaymentFound);
+        alert("Bağlantı başarılı! Hoş geldin, " + user.username);
+      } catch (error) {
+        alert("Bağlantı başarısız: " + error);
+      }
+    }
+
+    function onIncompletePaymentFound(payment) {
+      console.log("Eksik ödeme bulundu:", payment);
+    }
+  </script>
 </head>
+
 <body>
   <header>
     <img src="images/file_0000000065e461fd989f950fa315eda7.png" alt="Ayasofya Logo" class="logo">
@@ -21,7 +43,7 @@
   <section class="donate">
     <h2>Bağış Yap</h2>
     <p>Bağışlarınızı Pi Wallet üzerinden gerçekleştirebilirsiniz.</p>
-    <a href="pi://wallet" class="donate-button">Pi Wallet ile Bağış Yap</a>
+    <button class="donate-button" onclick="connectWallet()">Pi Wallet ile Bağlan</button>
   </section>
 
   <footer>
