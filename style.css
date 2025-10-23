@@ -1,57 +1,53 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f2f2f2;
-  color: #333;
-  text-align: center;
-}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayasofya Charity</title>
+  <link rel="stylesheet" href="style.css">
 
-header {
-  padding: 30px 20px;
-}
+  <!-- Pi Network SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script>
+    // SDK başlat
+    Pi.init({ version: "2.0" });
 
-.logo {
-  width: 150px;
-  display: block;
-  margin: 0 auto 20px;
-}
+    async function connectWallet() {
+      try {
+        const scopes = ["username", "payments"];
+        const user = await Pi.authenticate(scopes, onIncompletePaymentFound);
+        alert("Bağlantı başarılı! Hoş geldin, " + user.username);
+      } catch (error) {
+        alert("Bağlantı başarısız: " + error);
+      }
+    }
 
-h1 {
-  font-size: 2em;
-  margin-bottom: 10px;
-}
+    function onIncompletePaymentFound(payment) {
+      console.log("Eksik ödeme bulundu:", payment);
+    }
+  </script>
+</head>
 
-.subtitle {
-  font-size: 1.2em;
-  color: #555;
-}
+<body>
+  <header>
+    <img src="images/file_0000000065e461fd989f950fa315eda7.png" alt="Ayasofya Logo" class="logo">
+    <h1>Ayasofya Charity</h1>
+    <p class="subtitle">Pi Network üzerinden bağış yapabilirsiniz</p>
+  </header>
 
-section {
-  padding: 30px 20px;
-  margin: 20px auto;
-  max-width: 700px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
+  <section class="about">
+    <h2>Hakkımızda</h2>
+    <p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
+  </section>
 
-section h2 {
-  color: #1a1a1a;
-  margin-bottom: 10px;
-}
+  <section class="donate">
+    <h2>Bağış Yap</h2>
+    <p>Bağışlarınızı Pi Wallet üzerinden gerçekleştirebilirsiniz.</p>
+    <button class="donate-button" onclick="connectWallet()">Pi Wallet ile Bağlan</button>
+  </section>
 
-.donate-button {
-  display: inline-block;
-  padding: 12px 25px;
-  background-color: #0077cc;
-  color: white;
-  text-decoration: none;
-  border-radius: 25px;
-  font-weight: bold;
-  margin-top: 15px;
-}
-
-.donate-button:hover {
-  background-color: #005fa3;
-}
+  <footer>
+    <p>© 2025 Ayasofya Charity | Tüm hakları saklıdır</p>
+  </footer>
+</body>
+</html>
