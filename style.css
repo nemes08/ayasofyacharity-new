@@ -1,77 +1,70 @@
-/* Genel Ayarlar */
+/* Genel ayarlar */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f8f9fa;
+  background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
   color: #333;
-}
-
-/* Header */
-header {
   text-align: center;
-  background-color: #ffffff;
-  padding: 30px 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-header img {
+/* Logo */
+.logo {
+  width: 180px;
   display: block;
-  margin: 0 auto 15px auto;
-  max-width: 200px;
-  height: auto;
+  margin: 40px auto 20px;
 }
 
-header h1 {
-  margin: 0;
-  color: #222;
-}
-
-header p {
-  color: #777;
-}
-
-/* İçerik */
-main {
-  max-width: 800px;
-  margin: 30px auto;
-  padding: 0 20px;
-  text-align: center;
-}
-
-main h2 {
-  font-size: 1.5em;
+/* Başlık ve alt başlık */
+h1 {
+  font-size: 2.5em;
+  color: #1f497d;
   margin-bottom: 10px;
-  color: #444;
 }
 
-main p {
-  font-size: 1em;
-  margin-bottom: 25px;
+.subtitle {
+  font-size: 1.2em;
+  color: #3e6fb0;
+  margin-bottom: 40px;
 }
 
-/* Bağış Butonu */
-.donate-btn {
+/* Bölümler */
+section {
+  padding: 40px 20px;
+  margin: 20px auto;
+  max-width: 700px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Hakkımızda ve Bağış başlıkları */
+section h2 {
+  color: #1f497d;
+  margin-bottom: 15px;
+}
+
+/* Buton */
+.donate-button {
   display: inline-block;
-  background-color: #f1b42f;
-  color: #fff;
-  padding: 12px 25px;
-  border-radius: 8px;
+  padding: 15px 30px;
+  background-color: #ff6b6b;
+  color: white;
+  font-weight: 600;
   text-decoration: none;
-  transition: background-color 0.3s;
-  font-weight: bold;
+  border-radius: 50px;
+  transition: 0.3s;
+  margin-top: 20px;
 }
 
-.donate-btn:hover {
-  background-color: #d99b24;
+.donate-button:hover {
+  background-color: #ff4757;
+  transform: scale(1.05);
 }
 
 /* Footer */
 footer {
-  text-align: center;
-  padding: 20px;
+  margin: 40px 0;
   font-size: 0.9em;
-  background-color: #fff;
-  color: #777;
-  border-top: 1px solid #eee;
+  color: #666;
 }
