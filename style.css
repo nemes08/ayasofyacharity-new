@@ -7,7 +7,6 @@ body {
   text-align: center;
 }
 
-/* Header ve logo */
 header {
   padding: 30px 20px;
 }
@@ -18,7 +17,6 @@ header {
   margin: 0 auto 20px;
 }
 
-/* Başlıklar ve alt yazı */
 h1 {
   font-size: 2em;
   margin-bottom: 10px;
@@ -29,7 +27,6 @@ h1 {
   color: #555;
 }
 
-/* Bölümler */
 section {
   padding: 30px 20px;
   margin: 20px auto;
@@ -44,7 +41,6 @@ section h2 {
   margin-bottom: 10px;
 }
 
-/* Buton */
 .donate-button {
   display: inline-block;
   padding: 12px 25px;
