@@ -29,25 +29,31 @@
   <footer>
     <p>© 2025 Ayasofya Charity | Tüm hakları saklıdır.</p>
   </footer>
-
   <script>
-    const piButton = document.getElementById('pi-button');
+const piButton = document.getElementById('pi-button');
 
-    piButton.addEventListener('click', () => {
-      if (window.PiNetwork) {
+// Küçük test: PiNetwork yüklü mü?
+if (window.PiNetwork) {
+    console.log('Pi SDK yüklendi ✅');
+} else {
+    console.warn('Pi SDK yüklenmedi ❌');
+}
+
+piButton.addEventListener('click', () => {
+    if (window.PiNetwork) {
         PiNetwork.request('connect')
         .then(user => {
-          console.log('Kullanıcı bağlandı:', user);
-          alert('Pi Wallet ile bağlandınız!');
+            console.log('Kullanıcı bağlandı:', user);
+            alert('Pi Wallet ile bağlandınız!');
         })
         .catch(err => {
-          console.error(err);
-          alert('Bağlantı hatası, tekrar deneyin.');
+            console.error(err);
+            alert('Bağlantı hatası, tekrar deneyin.');
         });
-      } else {
+    } else {
         alert('Lütfen Pi Browser içinde açınız!');
-      }
-    });
-  </script>
+    }
+});
+</script>
 </body>
 </html>
