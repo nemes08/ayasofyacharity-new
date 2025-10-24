@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pi Wallet Test - Ayasofya Charity</title>
+  <script src="https://cdn.minepi.com/pi/pi-sdk.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      text-align: center;
+      padding: 40px;
+    }
+    button {
+      background: #7b2ff7;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #9a4dff;
+    }
+    #status {
+      margin-top: 30px;
+      font-size: 16px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pi Wallet Test Sayfası</h1>
+  <p>Bu sayfa, Pi Browser içinde çalışıp çalışmadığını test eder.</p>
+  <button id="connectBtn">Pi Wallet ile Bağlan</button>
+  <div id="status"></div>
+
+  <script>
+    const statusDiv = document.getElementById('status');
+    const connectBtn = document.getElementById('connectBtn');
+
+    // SDK yüklenmiş mi?
+    if (window.PiNetwork) {
+      statusDiv.innerText = "✅ Pi SDK başarıyla yüklendi!";
+    } else {
+      statusDiv.innerText = "❌ Pi SDK yüklenmedi. Lütfen Pi Browser içinde açınız.";
+    }
+
+    // Bağlantı denemesi
+    connectBtn.addEventListener('click', () => {
+      if (window.PiNetwork) {
+        PiNetwork.request('connect')
+        .then(user => {
+          console.log('Bağlantı başarılı:', user);
+          statusDiv.innerText = "🎉 Başarılı bağlantı: " + JSON.stringify(user);
+        })
+        .catch(err => {
+          console.error(err);
+          statusDiv.innerText = "⚠️ Bağlantı hatası: " + err.message;
+        });
+      } else {
+        statusDiv.innerText = "Lütfen Pi Browser içinde açınız.";
+      }
+    });
+  </script>
+</body>
+</html>
