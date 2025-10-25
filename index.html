@@ -29,24 +29,38 @@
   <footer>
     <p>© 2025 Ayasofya Charity | Tüm hakları saklıdır.</p>
   </footer>
+ <script>
+console.log("Ayasofya Charity başlatılıyor...");
 
-  <script>
-console.log("Sayfa yüklendi ✅");
-document.body.insertAdjacentHTML("beforeend", "<p style='color:blue'>[TEST] Sayfa yüklendi</p>");
+const piButton = document.getElementById('pi-button');
 
-setTimeout(() => {
-  const info = document.createElement("p");
-  info.style.color = "red";
+// SDK yüklü mü?
+if (window.Pi) {
+  console.log("✅ Pi SDK bulundu");
 
-  if (window.PiNetwork) {
-    info.textContent = "[TEST] window.PiNetwork bulundu ✅";
-  } else if (window.Pi) {
-    info.textContent = "[TEST] window.Pi bulundu ✅";
-  } else {
-    info.textContent = "[TEST] Pi SDK bulunamadı ❌";
+  // Pi SDK başlatma
+  Pi.init({ version: "2.0" });
+
+  piButton.addEventListener('click', async () => {
+    try {
+      const scopes = ['username', 'payments'];
+      const user = await Pi.authenticate(scopes, onIncompletePaymentFound);
+      console.log("👤 Kullanıcı bağlandı:", user);
+      alert("Pi Wallet ile başarıyla bağlandınız, " + user.username + "!");
+    } catch (err) {
+      console.error("❌ Bağlantı hatası:", err);
+      alert("Bağlantı sırasında hata oluştu, lütfen tekrar deneyin.");
+    }
+  });
+
+  function onIncompletePaymentFound(payment) {
+    console.log("⏳ Tamamlanmamış ödeme bulundu:", payment);
   }
 
-  document.body.appendChild(info);
-  console.log(info.textContent);
-}, 2000);
-</script>
+} else {
+  console.warn("❌ Pi SDK bulunamadı. Lütfen Pi Browser içinde açın.");
+  piButton.addEventListener('click', () => {
+    alert("Lütfen bu sayfayı Pi Browser içinde açınız!");
+  });
+}
+</script> 
