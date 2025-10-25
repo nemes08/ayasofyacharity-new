@@ -4,9 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ayasofya Charity</title>
+
+  <!-- Pi SDK v2 -->
   <script src="https://sdk.minepi.com/v2/pi-sdk.js"></script>
+
+  <!-- Stil dosyası -->
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <header>
     <img src="images/file_0000000065e461fd989f950fa315eda7.png" alt="Ayasofya Logo" class="logo">
@@ -16,13 +21,16 @@
   <main>
     <section class="about">
       <h2>Hakkımızda</h2>
-      <p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
+      <p>
+        Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur.
+        Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.
+      </p>
     </section>
 
     <section class="donate">
       <h2>Bağış Yap</h2>
       <button id="pi-button">Pi Wallet ile Bağlan</button>
-      <div id="pi-status" style="margin-top:12px;color:#444;"></div>
+      <div id="pi-status" style="margin-top:12px;color:#333;font-size:14px;"></div>
     </section>
   </main>
 
@@ -31,37 +39,38 @@
   </footer>
 
   <script>
-    console.log("Ayasofya Charity başlatılıyor...");
+    console.log("🔹 Ayasofya Charity yüklendi");
 
-    const piButton = document.getElementById('pi-button');
+    const statusEl = document.getElementById("pi-status");
+    const button = document.getElementById("pi-button");
 
-    // SDK yüklü mü?
+    // Pi SDK yüklü mü kontrol et
     if (window.Pi) {
-      console.log("✅ Pi SDK bulundu");
+      console.log("✅ Pi SDK yüklendi");
+      statusEl.textContent = "Pi SDK yüklendi, bağlanabilirsiniz.";
 
-      // Pi SDK başlatma
       Pi.init({ version: "2.0" });
 
-      piButton.addEventListener('click', async () => {
+      button.addEventListener("click", async () => {
         try {
-          const scopes = ['username', 'payments'];
+          const scopes = ["username", "payments"];
           const user = await Pi.authenticate(scopes, onIncompletePaymentFound);
-          console.log("👤 Kullanıcı bağlandı:", user);
-          alert("Pi Wallet ile başarıyla bağlandınız, " + user.username + "!");
+          console.log("👤 Kullanıcı:", user);
+          alert("Pi Wallet ile bağlandınız, @" + user.username);
         } catch (err) {
-          console.error("❌ Bağlantı hatası:", err);
-          alert("Bağlantı sırasında hata oluştu, lütfen tekrar deneyin.");
+          console.error("❌ Hata:", err);
+          alert("Bağlantı başarısız. Lütfen tekrar deneyin.");
         }
       });
 
       function onIncompletePaymentFound(payment) {
-        console.log("⏳ Tamamlanmamış ödeme bulundu:", payment);
+        console.log("⏳ Tamamlanmamış ödeme:", payment);
       }
-
     } else {
-      console.warn("❌ Pi SDK bulunamadı. Lütfen Pi Browser içinde açın.");
-      piButton.addEventListener('click', () => {
-        alert("Lütfen bu sayfayı Pi Browser içinde açınız!");
+      console.warn("❌ Pi SDK bulunamadı");
+      statusEl.textContent = "Pi SDK yüklenemedi. Lütfen Pi Browser içinde açınız!";
+      button.addEventListener("click", () => {
+        alert("Bu sayfayı Pi Browser içinde açmanız gerekiyor!");
       });
     }
   </script>
