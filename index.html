@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ayasofya Charity</title>
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script src="https://sdk.minepi.com/v2/pi-sdk.js"></script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -29,38 +29,41 @@
   <footer>
     <p>© 2025 Ayasofya Charity | Tüm hakları saklıdır.</p>
   </footer>
- <script>
-console.log("Ayasofya Charity başlatılıyor...");
 
-const piButton = document.getElementById('pi-button');
+  <script>
+    console.log("Ayasofya Charity başlatılıyor...");
 
-// SDK yüklü mü?
-if (window.Pi) {
-  console.log("✅ Pi SDK bulundu");
+    const piButton = document.getElementById('pi-button');
 
-  // Pi SDK başlatma
-  Pi.init({ version: "2.0" });
+    // SDK yüklü mü?
+    if (window.Pi) {
+      console.log("✅ Pi SDK bulundu");
 
-  piButton.addEventListener('click', async () => {
-    try {
-      const scopes = ['username', 'payments'];
-      const user = await Pi.authenticate(scopes, onIncompletePaymentFound);
-      console.log("👤 Kullanıcı bağlandı:", user);
-      alert("Pi Wallet ile başarıyla bağlandınız, " + user.username + "!");
-    } catch (err) {
-      console.error("❌ Bağlantı hatası:", err);
-      alert("Bağlantı sırasında hata oluştu, lütfen tekrar deneyin.");
+      // Pi SDK başlatma
+      Pi.init({ version: "2.0" });
+
+      piButton.addEventListener('click', async () => {
+        try {
+          const scopes = ['username', 'payments'];
+          const user = await Pi.authenticate(scopes, onIncompletePaymentFound);
+          console.log("👤 Kullanıcı bağlandı:", user);
+          alert("Pi Wallet ile başarıyla bağlandınız, " + user.username + "!");
+        } catch (err) {
+          console.error("❌ Bağlantı hatası:", err);
+          alert("Bağlantı sırasında hata oluştu, lütfen tekrar deneyin.");
+        }
+      });
+
+      function onIncompletePaymentFound(payment) {
+        console.log("⏳ Tamamlanmamış ödeme bulundu:", payment);
+      }
+
+    } else {
+      console.warn("❌ Pi SDK bulunamadı. Lütfen Pi Browser içinde açın.");
+      piButton.addEventListener('click', () => {
+        alert("Lütfen bu sayfayı Pi Browser içinde açınız!");
+      });
     }
-  });
-
-  function onIncompletePaymentFound(payment) {
-    console.log("⏳ Tamamlanmamış ödeme bulundu:", payment);
-  }
-
-} else {
-  console.warn("❌ Pi SDK bulunamadı. Lütfen Pi Browser içinde açın.");
-  piButton.addEventListener('click', () => {
-    alert("Lütfen bu sayfayı Pi Browser içinde açınız!");
-  });
-}
-</script> 
+  </script>
+</body>
+</html>
