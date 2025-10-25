@@ -31,47 +31,22 @@
   </footer>
 
   <script>
-    const piButton = document.getElementById('pi-button');
-    const status = document.getElementById('pi-status');
+console.log("Sayfa yüklendi ✅");
+document.body.insertAdjacentHTML("beforeend", "<p style='color:blue'>[TEST] Sayfa yüklendi</p>");
 
-    // SDK'nın hangi isimle yüklendiğini kontrol et (daha dayanıklı)
-    function sdkLoaded() {
-      return !!(window.PiNetwork || window.Pi);
-    }
+setTimeout(() => {
+  const info = document.createElement("p");
+  info.style.color = "red";
 
-    if (sdkLoaded()) {
-      status.innerText = "✅ Pi SDK yüklendi.";
-      console.log("Pi SDK yüklendi:", {PiNetwork: !!window.PiNetwork, Pi: !!window.Pi});
-    } else {
-      status.innerText = "❌ Pi SDK yüklenmedi. Lütfen Pi Browser içinde açınız.";
-      console.warn("Pi SDK yüklenmedi. window.PiNetwork:", !!window.PiNetwork, "window.Pi:", !!window.Pi);
-    }
+  if (window.PiNetwork) {
+    info.textContent = "[TEST] window.PiNetwork bulundu ✅";
+  } else if (window.Pi) {
+    info.textContent = "[TEST] window.Pi bulundu ✅";
+  } else {
+    info.textContent = "[TEST] Pi SDK bulunamadı ❌";
+  }
 
-    piButton.addEventListener('click', async () => {
-      if (!sdkLoaded()) {
-        alert('Lütfen Pi Browser içinde açınız!');
-        return;
-      }
-
-      try {
-        // Pi SDK sürümüne göre uygun çağrıyı yap
-        if (window.PiNetwork && typeof PiNetwork.request === 'function') {
-          const user = await PiNetwork.request('connect');
-          console.log('Kullanıcı bağlandı (PiNetwork):', user);
-          alert('Pi Wallet ile bağlandınız!');
-        } else if (window.Pi && typeof Pi.authenticate === 'function') {
-          // Eski/new Pi SDK varyantı
-          const user = await Pi.authenticate(['username','payments']);
-          console.log('Kullanıcı bağlandı (Pi.authenticate):', user);
-          alert('Pi Wallet ile bağlandınız!');
-        } else {
-          throw new Error('Uygun Pi API bulunamadı.');
-        }
-      } catch (err) {
-        console.error('Bağlantı hatası:', err);
-        alert('Bağlantı hatası: ' + (err && err.message ? err.message : err));
-      }
-    });
-  </script>
-</body>
-</html>
+  document.body.appendChild(info);
+  console.log(info.textContent);
+}, 2000);
+</script>
