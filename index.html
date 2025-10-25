@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="tr">
-  <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ayasofya Charity</title>
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-</head>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
@@ -22,37 +22,56 @@
     <section class="donate">
       <h2>Bağış Yap</h2>
       <button id="pi-button">Pi Wallet ile Bağlan</button>
+      <div id="pi-status" style="margin-top:12px;color:#444;"></div>
     </section>
   </main>
 
   <footer>
     <p>© 2025 Ayasofya Charity | Tüm hakları saklıdır.</p>
   </footer>
+
   <script>
-const piButton = document.getElementById('pi-button');
+    const piButton = document.getElementById('pi-button');
+    const status = document.getElementById('pi-status');
 
-// Küçük test: PiNetwork yüklü mü?
-if (window.PiNetwork) {
-    console.log('Pi SDK yüklendi ✅');
-} else {
-    console.warn('Pi SDK yüklenmedi ❌');
-}
-
-piButton.addEventListener('click', () => {
-    if (window.PiNetwork) {
-        PiNetwork.request('connect')
-        .then(user => {
-            console.log('Kullanıcı bağlandı:', user);
-            alert('Pi Wallet ile bağlandınız!');
-        })
-        .catch(err => {
-            console.error(err);
-            alert('Bağlantı hatası, tekrar deneyin.');
-        });
-    } else {
-        alert('Lütfen Pi Browser içinde açınız!');
+    // SDK'nın hangi isimle yüklendiğini kontrol et (daha dayanıklı)
+    function sdkLoaded() {
+      return !!(window.PiNetwork || window.Pi);
     }
-});
-</script>
+
+    if (sdkLoaded()) {
+      status.innerText = "✅ Pi SDK yüklendi.";
+      console.log("Pi SDK yüklendi:", {PiNetwork: !!window.PiNetwork, Pi: !!window.Pi});
+    } else {
+      status.innerText = "❌ Pi SDK yüklenmedi. Lütfen Pi Browser içinde açınız.";
+      console.warn("Pi SDK yüklenmedi. window.PiNetwork:", !!window.PiNetwork, "window.Pi:", !!window.Pi);
+    }
+
+    piButton.addEventListener('click', async () => {
+      if (!sdkLoaded()) {
+        alert('Lütfen Pi Browser içinde açınız!');
+        return;
+      }
+
+      try {
+        // Pi SDK sürümüne göre uygun çağrıyı yap
+        if (window.PiNetwork && typeof PiNetwork.request === 'function') {
+          const user = await PiNetwork.request('connect');
+          console.log('Kullanıcı bağlandı (PiNetwork):', user);
+          alert('Pi Wallet ile bağlandınız!');
+        } else if (window.Pi && typeof Pi.authenticate === 'function') {
+          // Eski/new Pi SDK varyantı
+          const user = await Pi.authenticate(['username','payments']);
+          console.log('Kullanıcı bağlandı (Pi.authenticate):', user);
+          alert('Pi Wallet ile bağlandınız!');
+        } else {
+          throw new Error('Uygun Pi API bulunamadı.');
+        }
+      } catch (err) {
+        console.error('Bağlantı hatası:', err);
+        alert('Bağlantı hatası: ' + (err && err.message ? err.message : err));
+      }
+    });
+  </script>
 </body>
 </html>
