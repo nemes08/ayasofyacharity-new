@@ -4,20 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayasofya Charity</title>
+
+  <!-- Stil dosyası doğru yoldan -->
   <link rel="stylesheet" href="style.css">
+
   <!-- Pi SDK v2 -->
   <script src="https://sdk.minepi.com/v2/pi-sdk.js"></script>
 </head>
 <body>
   <header>
-    <img src="images/logo.png" alt="Ayasofya Logo" class="logo">
+    <!-- Logo root dizindeyse direkt bu şekilde -->
+    <img src="logo.png" alt="Ayasofya Logo" class="logo">
     <h1>Ayasofya Charity</h1>
   </header>
 
   <main>
     <section class="about">
       <h2>Hakkımızda</h2>
-      <p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
+      <p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur. 
+      Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
     </section>
 
     <section class="donate">
@@ -35,9 +40,9 @@
     const piButton = document.getElementById('pi-button');
     const piStatus = document.getElementById('pi-status');
 
-    // Pi SDK yüklü mü?
+    // Pi SDK kontrolü
     if (window.Pi) {
-      piStatus.textContent = "✅ Pi SDK yüklendi, Pi Browser içinde açabilirsiniz.";
+      piStatus.textContent = "✅ Pi SDK yüklendi. Pi Browser üzerinden bağlanabilirsiniz.";
       
       Pi.init({ version: "2.0" });
 
@@ -49,12 +54,12 @@
           alert(`Pi Wallet ile başarıyla bağlandınız, ${user.username}!`);
         } catch (err) {
           console.error("Bağlantı hatası:", err);
-          alert("Bağlantı sırasında hata oluştu, tekrar deneyin.");
+          alert("Bağlantı sırasında hata oluştu, lütfen tekrar deneyin.");
         }
       });
 
     } else {
-      piStatus.textContent = "❌ Pi SDK yüklenmedi. Lütfen Pi Browser içinde açın.";
+      piStatus.textContent = "❌ Pi SDK yüklenmedi. Lütfen bu sayfayı Pi Browser içinde açın.";
       piButton.addEventListener('click', () => {
         alert("Lütfen bu sayfayı Pi Browser içinde açınız!");
       });
