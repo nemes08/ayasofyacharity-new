@@ -37,33 +37,35 @@
   </footer>
 
   <script>
-    const piButton = document.getElementById('pi-button');
-    const piStatus = document.getElementById('pi-status');
+<script>
+  const piButton = document.getElementById('pi-button');
+  const piStatus = document.getElementById('pi-status');
 
-    // Pi SDK kontrolü
-    if (window.Pi) {
-      piStatus.textContent = "✅ Pi SDK yüklendi. Pi Browser üzerinden bağlanabilirsiniz.";
-      
-      Pi.init({ version: "2.0" });
+  if (window.Pi) {
+    piStatus.textContent = "✅ Pi SDK yüklendi, Pi Browser içindesiniz.";
 
-      piButton.addEventListener('click', async () => {
-        try {
-          const scopes = ['username', 'payments'];
-          const user = await Pi.authenticate(scopes);
-          console.log("Kullanıcı bağlandı:", user);
-          alert(`Pi Wallet ile başarıyla bağlandınız, ${user.username}!`);
-        } catch (err) {
-          console.error("Bağlantı hatası:", err);
-          alert("Bağlantı sırasında hata oluştu, lütfen tekrar deneyin.");
-        }
-      });
+    Pi.init({ version: "2.0", app_id: "ayasofyacharity-new" }); // DApp kimliğini ekledik
 
-    } else {
-      piStatus.textContent = "❌ Pi SDK yüklenmedi. Lütfen bu sayfayı Pi Browser içinde açın.";
-      piButton.addEventListener('click', () => {
-        alert("Lütfen bu sayfayı Pi Browser içinde açınız!");
-      });
-    }
-  </script>
+    piButton.addEventListener('click', async () => {
+      try {
+        const scopes = ['username', 'payments'];
+        const user = await Pi.authenticate(scopes, onIncompletePaymentFound);
+        alert(`Bağlantı başarılı! Hoş geldin ${user.username}`);
+      } catch (err) {
+        console.error(err);
+        alert("Bağlantı hatası, tekrar deneyin.");
+      }
+    });
+  } else {
+    piStatus.textContent = "❌ Lütfen bu sayfayı Pi Browser içinde açın.";
+    piButton.addEventListener('click', () => {
+      alert("Bu sayfa sadece Pi Browser'da çalışır.");
+    });
+  }
+
+  function onIncompletePaymentFound(payment) {
+    console.log("Eksik ödeme bulundu:", payment);
+  }
+</script>
 </body>
 </html>
