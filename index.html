@@ -5,60 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayasofya Charity</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Pi SDK v2 -->
   <script src="https://sdk.minepi.com/v2/pi-sdk.js"></script>
 </head>
 <body>
-  <header>
-    <!-- Logo doğrudan GitHub Pages linki ile -->
-    <img src="https://nemes08.github.io/ayasofyacharity-new/logo.png" alt="Ayasofya Logo" width="150" class="logo">
+  <header style="text-align:center; margin-top:20px;">
+    <img src="https://nemes08.github.io/ayasofyacharity-new/logo.png" alt="Ayasofya Logo" width="180" style="border-radius:12px;">
     <h1>Ayasofya Charity</h1>
   </header>
 
-  <main>
-    <section class="about">
+  <main style="text-align:center; margin-top:40px;">
+    <section>
       <h2>Hakkımızda</h2>
       <p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
     </section>
 
-    <section class="donate">
+    <section style="margin-top:30px;">
       <h2>Bağış Yap</h2>
-      <button id="pi-button">Pi Wallet ile Bağlan</button>
+      <button id="pi-button" style="padding:12px 24px; background-color:purple; color:white; border:none; border-radius:8px; cursor:pointer;">
+        Pi Wallet ile Bağlan
+      </button>
       <div id="pi-status" style="margin-top:12px;color:#444;"></div>
     </section>
   </main>
 
-  <footer>
+  <footer style="text-align:center; margin-top:60px; font-size:14px; color:#555;">
     <p>© 2025 Ayasofya Charity | Tüm hakları saklıdır.</p>
   </footer>
 
   <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      const piButton = document.getElementById("pi-button");
-      const piStatus = document.getElementById("pi-status");
+    const piButton = document.getElementById('pi-button');
+    const piStatus = document.getElementById('pi-status');
 
-      if (!window.Pi) {
-        piStatus.textContent = "❌ Lütfen bu sayfayı Pi Browser içinde açın!";
-        piButton.disabled = true;
-        return;
-      }
+    if (window.Pi) {
+      piStatus.textContent = "✅ Pi SDK yüklendi. Pi Browser içindesiniz.";
+      Pi.init({ version: "2.0" });
 
-      piStatus.textContent = "✅ Pi SDK yüklendi, Pi Browser içindesiniz!";
-      piButton.disabled = false;
-
-      Pi.init({ version: "2.0", app_id: "ayasofyacharity-new" });
-
-      piButton.addEventListener("click", async () => {
+      piButton.addEventListener('click', async () => {
         try {
-          const scopes = ["username", "payments"];
+          const scopes = ['username', 'payments'];
           const user = await Pi.authenticate(scopes);
-          alert(`Hoş geldin ${user.username}!`);
+          console.log("Kullanıcı bağlandı:", user);
+          alert(`Hoş geldin ${user.username}! Pi Wallet bağlantısı başarılı.`);
         } catch (err) {
           console.error(err);
-          alert("Bağlantı hatası, tekrar deneyin.");
+          alert("Bağlantı sırasında hata oluştu.");
         }
       });
-    });
+    } else {
+      piStatus.textContent = "❌ Pi SDK yüklenmedi. Lütfen bu sayfayı Pi Browser'da açın.";
+      piButton.addEventListener('click', () => {
+        alert("Lütfen bu sayfayı Pi Browser içinde açınız!");
+      });
+    }
   </script>
 </body>
 </html>
