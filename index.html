@@ -74,29 +74,30 @@
   </footer>
 
   <!-- Pi SDK -->
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-  <script>
-    // SDK'yı başlat
-    Pi.init({ version: "2.0" });
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+<script>
+  // SDK başlatılıyor
+  Pi.init({ version: "2.0" });
 
-    // Bağış butonu
-    const donateButton = document.getElementById("pi-donate");
-    donateButton.addEventListener("click", async () => {
-      try {
-        const scopes = ['payments'];
-        const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
-        console.log('Kullanıcı bilgileri:', auth.user);
-        alert("Bağlantı başarılı! Artık bağış yapabilirsiniz 🙏");
-      } catch (err) {
-        console.error(err);
-        alert("Bağlantı başarısız. Lütfen Pi Browser içinde tekrar deneyin.");
-      }
-    });
+  const donateButton = document.getElementById("pi-donate");
+  const statusText = document.getElementById("status");
 
-    // Eksik ödemeleri kontrol
-    function onIncompletePaymentFound(payment) {
-      console.log('Eksik ödeme bulundu:', payment);
+  donateButton.addEventListener("click", async () => {
+    try {
+      const scopes = ['payments'];
+      const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+      console.log("Kullanıcı:", auth.user);
+      statusText.innerHTML = "✅ Valide bağlantı sağlandı!";
+      alert("Bağlantı başarılı! Artık bağış yapabilirsiniz 🙏");
+    } catch (error) {
+      console.error("Bağlantı hatası:", error);
+      statusText.innerHTML = "❌ Bağlantı başarısız. Lütfen Pi Browser içinde deneyin.";
     }
-  </script>
+  });
+
+  function onIncompletePaymentFound(payment) {
+    console.log("Eksik ödeme bulundu:", payment);
+  }
+</script>
 </body>
 </html>
