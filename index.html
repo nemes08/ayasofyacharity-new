@@ -34,6 +34,8 @@ footer{margin-top:14px;text-align:center;color:var(--muted);font-size:14px}
 .modal-backdrop.show{opacity:1;pointer-events:auto}
 .modal{background:var(--card);padding:18px;border-radius:12px;min-width:260px;max-width:420px;box-shadow:0 10px 30px rgba(2,6,23,0.2);text-align:center;animation:popup-fade 0.4s ease forwards}
 @keyframes popup-fade{0%{transform:scale(0.7);opacity:0}100%{transform:scale(1);opacity:1}}
+.modal.show{animation: popup-slide 0.4s ease forwards;}
+@keyframes popup-slide{0%{transform:translateY(-20px);opacity:0}100%{transform:translateY(0);opacity:1}}
 .close-btn{background:#e6e6e6;border-radius:8px;padding:8px 14px;border:none;cursor:pointer}
 .socials{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
 .socials button{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;border:1px solid #eee;color:#222;font-weight:600;background:white;cursor:pointer;transition:transform 0.2s}
@@ -126,23 +128,30 @@ donationBtn.setAttribute('aria-disabled','false');
 },1000);
 
 // Bağış butonu
-donationBtn.addEventListener('click',()=>{
-const amount=donationSelect.value;
-paymentStatus.textContent='';
-donationBtn.disabled=true;
-donationBtn.setAttribute('aria-disabled','true');
-// Logo tekrar dönsün
-logo.classList.remove('spin');
-void logo.offsetWidth; // trigger reflow
-logo.classList.add('spin');
+donationBtn.addEventListener('click', () => {
+  const amount = donationSelect.value;
+  paymentStatus.textContent = '';
+  donationBtn.disabled = true;
+  donationBtn.setAttribute('aria-disabled', 'true');
 
-// Simule işlem
-setTimeout(()=>{
-popupMsg.textContent=`Teşekkürler! ${amount} Pi bağışladınız 🙏`;
-modal.classList.add('show');
-donationBtn.disabled=false;
-donationBtn.setAttribute('aria-disabled','false');
-},600);
+  // Logo tekrar dönsün
+  logo.classList.remove('spin');
+  void logo.offsetWidth; // trigger reflow
+  logo.classList.add('spin');
+
+  // Simule işlem
+  setTimeout(() => {
+    popupMsg.innerHTML = `<strong>${amount} Pi</strong> bağışladınız 🙏`;
+    modal.classList.add('show');
+
+    // 3 saniye sonra otomatik kaybol
+    setTimeout(() => {
+      modal.classList.remove('show');
+    }, 3000);
+
+    donationBtn.disabled = false;
+    donationBtn.setAttribute('aria-disabled','false');
+  }, 600);
 });
 
 // Popup kapatma
