@@ -1,160 +1,239 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayasofya Charity</title>
-  <link rel="icon" type="image/png" href="images/logo.png" />
-
   <style>
-    :root{
-      --bg:#f9f9f9;
-      --card:#ffffff;
-      --accent:#7c3aed;
-      --accent-dark:#6d28d9;
-      --muted:#666;
-      --success:#16a34a;
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      background: #f9fafb;
+      color: #222;
     }
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:#222}
-    .container{max-width:920px;margin:28px auto;padding:20px;}
-    header{display:flex;gap:18px;align-items:center;background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(16,24,40,0.06)}
-    .logo{width:160px;height:auto;border-radius:12px;transition:transform .6s ease}
-    .logo.spin{animation:logo-spin 2.5s ease-in-out;}
-    @keyframes logo-spin{0%{transform:rotate(0)}50%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}
 
-    header h1{font-size:22px;margin:0}
-    .meta{color:var(--muted);font-size:13px}
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
 
-    main{margin-top:18px;background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(16,24,40,0.04)}
-    section{margin-bottom:18px}
-    h2{margin:6px 0 10px 0;color:#222}
-    p{line-height:1.5;color:#333;margin:0}
+    .logo {
+      width: 120px;
+      animation: spin 2s linear infinite paused;
+    }
 
-    #wallet-status{display:inline-block;padding:8px 12px;border-radius:999px;font-weight:600; color:var(--success);opacity:0;transition:opacity 0.8s ease}
-    #wallet-status.pulse{animation:pulse 2s infinite;opacity:1}
-    @keyframes pulse{0%{text-shadow:0 0 0 var(--success)}50%{text-shadow:0 0 10px rgba(16,185,129,0.65)}100%{text-shadow:0 0 0 var(--success)}}
+    .logo.spin {
+      animation-play-state: running;
+    }
 
-    .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-    select{padding:10px;border-radius:8px;border:1px solid #e6e6e6;font-size:15px}
-    button{background:var(--accent);color:white;border:none;padding:10px 18px;border-radius:10px;font-weight:600;cursor:pointer}
-    button:hover{background:var(--accent-dark)}
-    button:disabled{background:#bbb;cursor:not-allowed}
-    #payment-status{margin-top:12px;font-weight:600;color:var(--success)}
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
 
-    footer{margin-top:14px;text-align:center;color:var(--muted);font-size:14px}
+    h1 {
+      color: #1e3a8a;
+      margin-top: 10px;
+    }
 
-    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.48);display:flex;align-items:center;justify-content:center;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s ease}
-    .modal-backdrop.show{opacity:1;pointer-events:auto}
-    .modal{background:var(--card);padding:18px;border-radius:12px;min-width:260px;max-width:420px;box-shadow:0 10px 30px rgba(2,6,23,0.2);text-align:center}
-    .modal h3{margin:0 0 8px 0}
-    .modal p{margin:0 0 14px 0}
-    .close-btn{background:#e6e6e6;border-radius:8px;padding:8px 14px;border:none;cursor:pointer}
+    h2 {
+      color: #16a34a;
+    }
 
-    .socials{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
-    .socials a{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;text-decoration:none;border:1px solid #eee;color:#222;font-weight:600;background:white}
-    .socials a:hover{box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+    .btn {
+      background: #16a34a;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 5px;
+      font-weight: bold;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      background: #15803d;
+    }
+
+    .status {
+      font-weight: bold;
+      margin-top: 8px;
+      color: #16a34a;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* ✅ Popup animasyonu */
+    .modal {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      display: none;
+      z-index: 999;
+    }
 
     .modal.show {
+      display: block;
       animation: popup-slide 0.4s ease forwards;
     }
 
     @keyframes popup-slide {
-      0% {transform: translateY(-20px); opacity: 0;}
-      100% {transform: translateY(0); opacity: 1;}
+      0% {
+        transform: translate(-50%, -60%);
+        opacity: 0;
+      }
+      100% {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+      }
     }
 
-    @media (max-width:560px){
-      header{flex-direction:column;align-items:center;text-align:center}
-      .logo{width:140px}
-      .controls{flex-direction:column;align-items:stretch}
+    .close-btn {
+      background: #e6e6e6;
+      border-radius: 8px;
+      padding: 8px 14px;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .socials {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .socials a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #eee;
+      color: #222;
+      font-weight: 600;
+      background: white;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .socials a:hover {
+      box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 560px) {
+      header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .logo {
+        width: 140px;
+      }
     }
   </style>
 </head>
-
 <body>
-  <div class="container">
-    <header>
-      <img src="images/logo.png" alt="Ayasofya Logo" id="site-logo" class="logo" />
-      <div>
-        <h1>Ayasofya Charity</h1>
-        <div class="meta">İhtiyaç sahiplerine destek — Pi Network üzerinden şeffaf bağış</div>
-      </div>
-    </header>
+  <header>
+    <img src="images/logo.png" alt="Ayasofya Logo" class="logo" id="logo">
+    <h1>Ayasofya Charity</h1>
+    <p>İhtiyaç sahiplerine destek — Pi Network üzerinden şeffaf bağış</p>
+  </header>
 
-    <main>
-      <section>
-        <h2>Hakkımızda</h2>
-        <p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
-      </section>
+  <main>
+    <h2>Hakkımızda</h2>
+    <p>Ayasofya Charity, ihtiyaç sahiplerine destek amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
 
-      <section>
-        <h2>Bağış Yap</h2>
-        <div style="margin-bottom:12px;">
-          <span id="wallet-status">✅ Valide bağlantı sağlandı!</span>
-        </div>
+    <h2>Bağış Yap</h2>
+    <div id="paymentStatus" class="status">✅ Valide bağlantı sağlandı!</div>
 
-        <div class="controls">
-          <select id="donation-amount">
-            <option value="1">1 Pi</option>
-            <option value="5">5 Pi</option>
-            <option value="10">10 Pi</option>
-          </select>
-          <button id="send-donation">Bağışı Gönder</button>
-        </div>
-      </section>
+    <select id="donationSelect" class="btn">
+      <option value="1">1 Pi</option>
+      <option value="5">5 Pi</option>
+      <option value="10">10 Pi</option>
+    </select>
 
-      <section>
-        <h2>Destekle & Paylaş</h2>
-        <div class="socials">
-          <a href="https://x.com/uursemen2?t=0Nv4rwAuEVqxQjSOfV8fUw&s=09" target="_blank">🕊️ X (Tweet Paylaş)</a>
-          <a href="https://www.facebook.com/share/1ZeKpjp33v/" target="_blank">📘 Facebook Paylaş</a>
-          <a href="https://t.me/uur1453" target="_blank">💬 Telegram</a>
-          <a href="https://www.instagram.com/uursemen08?igsh=MXZ0cWhjeXhmcjJqMw==" target="_blank">📸 Instagram</a>
-          <a href="https://www.tiktok.com/@semenuur" target="_blank">🎵 TikTok</a>
-          <a href="https://www.youtube.com/@uursemen08" target="_blank">▶️ YouTube</a>
-        </div>
-      </section>
-    </main>
+    <button id="donationBtn" class="btn">Bağışı Gönder</button>
 
-    <footer>© 2025 Ayasofya Charity | Tüm hakları saklıdır</footer>
-  </div>
-
-  <!-- Popup modal -->
-  <div class="modal-backdrop" id="modal">
-    <div class="modal">
-      <h3>Teşekkürler! 🙏</h3>
-      <p id="popup-msg">Bağışınız alındı.</p>
-      <button class="close-btn" id="close-popup">Kapat</button>
+    <div class="modal" id="modal">
+      <h3>Teşekkürler 🙏</h3>
+      <p id="popupMsg">Bağışınız alındı.</p>
+      <button class="close-btn" id="closeBtn">Kapat</button>
     </div>
-  </div>
+  </main>
+
+  <footer>
+    <h2>Destekle & Paylaş</h2>
+    <div class="socials">
+      <a href="https://x.com/uursemen2" target="_blank">🕊️ X</a>
+      <a href="https://facebook.com/share/1ZeKpjp33v" target="_blank">📘 Facebook</a>
+      <a href="https://t.me/uur1453" target="_blank">💬 Telegram</a>
+      <a href="https://instagram.com/uursemen08" target="_blank">📸 Instagram</a>
+      <a href="https://tiktok.com/@semenuur" target="_blank">🎵 TikTok</a>
+      <a href="https://youtube.com/@uursemen08" target="_blank">▶️ YouTube</a>
+    </div>
+
+    <p>© 2025 Ayasofya Charity | Tüm hakları saklıdır</p>
+  </footer>
 
   <script>
-    const donationBtn = document.getElementById('send-donation');
-    const donationSelect = document.getElementById('donation-amount');
-    const logo = document.getElementById('site-logo');
+    const donationBtn = document.getElementById('donationBtn');
+    const donationSelect = document.getElementById('donationSelect');
+    const paymentStatus = document.getElementById('paymentStatus');
     const modal = document.getElementById('modal');
-    const popupMsg = document.getElementById('popup-msg');
-    const closePopup = document.getElementById('close-popup');
-    const walletStatus = document.getElementById('wallet-status');
-
-    walletStatus.classList.add('pulse');
+    const popupMsg = document.getElementById('popupMsg');
+    const closeBtn = document.getElementById('closeBtn');
+    const logo = document.getElementById('logo');
 
     donationBtn.addEventListener('click', () => {
       const amount = donationSelect.value;
+      paymentStatus.textContent = '';
       donationBtn.disabled = true;
+
       logo.classList.remove('spin');
-      void logo.offsetWidth;
+      void logo.offsetWidth; // reset animation
       logo.classList.add('spin');
 
       setTimeout(() => {
         popupMsg.innerHTML = `<strong>${amount} Pi</strong> bağışladınız 🙏`;
         modal.classList.add('show');
-        setTimeout(() => modal.classList.remove('show'), 3000);
+
+        setTimeout(() => {
+          modal.classList.remove('show');
+        }, 3000);
+
         donationBtn.disabled = false;
-      }, 800);
+      }, 600);
     });
 
-    closePopup.addEventListener('click', () => {
+    closeBtn.addEventListener('click', () => {
       modal.classList.remove('show');
     });
   </script>
