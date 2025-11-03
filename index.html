@@ -1,116 +1,125 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ayasofya Charity</title>
-  <link rel="icon" type="image/png" href="images/logo.png" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ayasofya Charity</title>
+<link rel="icon" type="image/png" href="images/logo.png">
 
-  <style>
-    :root{
-      --bg:#f9f9f9;
-      --card:#ffffff;
-      --accent:#7c3aed;
-      --accent-dark:#6d28d9;
-      --muted:#666;
-      --success:#16a34a;
-    }
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:#222}
-    .container{max-width:920px;margin:28px auto;padding:20px;}
-    header{display:flex;gap:18px;align-items:center;background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(16,24,40,0.06)}
-    .logo{width:160px;height:auto;border-radius:12px;transition:transform .6s ease}
-    .logo.spin{animation:logo-spin 2.5s ease-in-out;}
-    @keyframes logo-spin{0%{transform:rotate(0)}50%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}
-
-    header h1{font-size:22px;margin:0}
-    .meta{color:var(--muted);font-size:13px}
-
-    main{margin-top:18px;background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(16,24,40,0.04)}
-    section{margin-bottom:18px}
-    h2{margin:6px 0 10px 0;color:#222}
-    p{line-height:1.5;color:#333;margin:0}
-
-    #wallet-status{display:inline-block;padding:8px 12px;border-radius:999px;font-weight:600; color:var(--success);opacity:0;transition:opacity 0.8s ease}
-    #wallet-status.pulse{animation:pulse 2s infinite}
-    @keyframes pulse{0%{text-shadow:0 0 0 var(--success)}50%{text-shadow:0 0 10px rgba(16,185,129,0.65)}100%{text-shadow:0 0 0 var(--success)}}
-
-    .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-    select{padding:10px;border-radius:8px;border:1px solid #e6e6e6;font-size:15px}
-    button{background:var(--accent);color:white;border:none;padding:10px 18px;border-radius:10px;font-weight:600;cursor:pointer}
-    button:hover{background:var(--accent-dark)}
-    button:disabled{background:#bbb;cursor:not-allowed}
-    #payment-status{margin-top:12px;font-weight:600;color:var(--success)}
-
-    footer{margin-top:14px;text-align:center;color:var(--muted);font-size:14px}
-
-    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.48);display:flex;align-items:center;justify-content:center;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s ease}
-    .modal-backdrop.show{opacity:1;pointer-events:auto}
-    .modal{background:var(--card);padding:18px;border-radius:12px;min-width:260px;max-width:420px;box-shadow:0 10px 30px rgba(2,6,23,0.2);text-align:center}
-    .modal h3{margin:0 0 8px 0}
-    .modal p{margin:0 0 14px 0}
-    .close-btn{background:#e6e6e6;border-radius:8px;padding:8px 14px;border:none;cursor:pointer}
-
-    .socials{display:flex;gap:10px;justify-content:center;margin-top:12px}
-    .socials a{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;text-decoration:none;border:1px solid #eee;color:#222;font-weight:600;background:white}
-    .socials a:hover{box-shadow:0 6px 18px rgba(2,6,23,0.06)}
-
-    @media (max-width:560px){
-      header{flex-direction:column;align-items:center;text-align:center}
-      .logo{width:140px}
-      .controls{flex-direction:column;align-items:stretch}
-      .socials{flex-wrap:wrap}
-    }
-  </style>
+<style>
+:root{--bg:#f9f9f9;--card:#fff;--accent:#7c3aed;--accent-dark:#6d28d9;--muted:#666;--success:#16a34a;}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:#222}
+.container{max-width:920px;margin:28px auto;padding:20px;}
+header{display:flex;gap:18px;align-items:center;background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(16,24,40,0.06)}
+.logo{width:160px;height:auto;border-radius:12px;transition:transform .6s ease}
+.logo.spin{animation:logo-spin 2.5s ease-in-out;}
+@keyframes logo-spin{0%{transform:rotate(0)}50%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}
+header h1{font-size:22px;margin:0}
+.meta{color:var(--muted);font-size:13px}
+main{margin-top:18px;background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(16,24,40,0.04)}
+section{margin-bottom:18px}
+h2{margin:6px 0 10px 0;color:#222}
+p{line-height:1.5;color:#333;margin:0}
+#wallet-status{display:inline-block;padding:8px 12px;border-radius:999px;font-weight:600;color:var(--success);opacity:0;transition:opacity 0.8s ease}
+#wallet-status.pulse{animation:pulse 2s infinite}
+@keyframes pulse{0%{text-shadow:0 0 0 var(--success)}50%{text-shadow:0 0 10px rgba(16,185,129,0.65)}100%{text-shadow:0 0 0 var(--success)}}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+select{padding:10px;border-radius:8px;border:1px solid #e6e6e6;font-size:15px}
+button{background:var(--accent);color:white;border:none;padding:10px 18px;border-radius:10px;font-weight:600;cursor:pointer}
+button:hover{background:var(--accent-dark)}
+button:disabled{background:#bbb;cursor:not-allowed}
+#payment-status{margin-top:12px;font-weight:600;color:var(--success)}
+footer{margin-top:14px;text-align:center;color:var(--muted);font-size:14px}
+.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.48);display:flex;align-items:center;justify-content:center;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s ease}
+.modal-backdrop.show{opacity:1;pointer-events:auto}
+.modal{background:var(--card);padding:18px;border-radius:12px;min-width:260px;max-width:420px;box-shadow:0 10px 30px rgba(2,6,23,0.2);text-align:center}
+.modal h3{margin:0 0 8px 0}
+.modal p{margin:0 0 14px 0}
+.close-btn{background:#e6e6e6;border-radius:8px;padding:8px 14px;border:none;cursor:pointer}
+.socials{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.socials button{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;border:1px solid #eee;color:#222;font-weight:600;background:white;cursor:pointer}
+.socials button:hover{box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+@media(max-width:560px){header{flex-direction:column;align-items:center;text-align:center}.logo{width:140px}.controls{flex-direction:column;align-items:stretch}}
+</style>
 </head>
 <body>
-  <div class="container" role="main">
-    <header>
-      <img src="images/logo.png" alt="Ayasofya Logo" id="site-logo" class="logo" />
-      <div>
-        <h1>Ayasofya Charity</h1>
-        <div class="meta">İhtiyaç sahiplerine destek — Pi Network üzerinden şeffaf bağış</div>
-      </div>
-    </header>
+<div class="container" role="main">
+<header>
+<img src="images/logo.png" alt="Ayasofya Logo" id="site-logo" class="logo" />
+<div>
+<h1>Ayasofya Charity</h1>
+<div class="meta">İhtiyaç sahiplerine destek — Pi Network üzerinden şeffaf bağış</div>
+</div>
+</header>
 
-    <main>
-      <section aria-labelledby="about-title">
-        <h2 id="about-title">Hakkımızda</h2>
-        <p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
-      </section>
+<main>
+<section aria-labelledby="about-title">
+<h2 id="about-title">Hakkımızda</h2>
+<p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
+</section>
 
-      <section aria-labelledby="donate-title">
-        <h2 id="donate-title">Bağış Yap</h2>
-        <div style="margin-bottom:12px;">
-          <span id="wallet-status" aria-live="polite">🔄 Bağlantı kontrol ediliyor...</span>
-        </div>
+<section aria-labelledby="donate-title">
+<h2 id="donate-title">Bağış Yap</h2>
+<div style="margin-bottom:12px;">
+<span id="wallet-status" aria-live="polite">🔄 Bağlantı kontrol ediliyor...</span>
+</div>
 
-        <div class="controls" aria-hidden="false">
-          <label for="donation-amount" style="display:none">Bağış miktarı</label>
-          <select id="donation-amount" aria-label="Bağış miktarı">
-            <option value="1">1 Pi</option>
-            <option value="5">5 Pi</option>
-            <option value="10">10 Pi</option>
-          </select>
+<div class="controls" aria-hidden="false">
+<label for="donation-amount" style="display:none">Bağış miktarı</label>
+<select id="donation-amount" aria-label="Bağış miktarı">
+<option value="1">1 Pi</option>
+<option value="5">5 Pi</option>
+<option value="10">10 Pi</option>
+</select>
 
-          <button id="send-donation" disabled aria-disabled="true">Bağışı Gönder</button>
-          <div id="payment-status" role="status" aria-live="polite"></div>
-        </div>
-      </section>
+<button id="send-donation" disabled aria-disabled="true">Bağışı Gönder</button>
+<div id="payment-status" role="status" aria-live="polite"></div>
+</div>
+</section>
 
-      <section aria-labelledby="share-title">
-        <h2 id="share-title">Destekle & Paylaş</h2>
-        <div class="socials" role="navigation" aria-label="Sosyal paylaşım">
-          <a href="https://x.com/uursemen2?t=0Nv4rwAuEVqxQjSOfV8fUw&s=09" target="_blank" rel="noopener noreferrer">🕊️ X (Twitter)</a>
-          <a href="https://www.facebook.com/share/1ZeKpjp33v/" target="_blank" rel="noopener noreferrer">📘 Facebook</a>
-          <a href="https://t.me/uur1453" target="_blank" rel="noopener noreferrer">💬 Telegram</a>
-          <a href="https://www.instagram.com/uursemen08?igsh=MXZ0cWhjeXhmcjJqMw==" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
-          <a href="https://www.tiktok.com/@semenuur" target="_blank" rel="noopener noreferrer">🎵 TikTok</a>
-          <a href="https://www.youtube.com/@uursemen08" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
-        </div>
-      </section>
-    </main>
+<section aria-labelledby="share-title">
+<h2 id="share-title">Destekle & Paylaş</h2>
+<div class="socials" role="navigation" aria-label="Sosyal paylaşım">
+<button id="share-x">🕊️ X (Tweet Paylaş)</button>
+<button id="share-facebook">📘 Facebook Paylaş</button>
+<button id="share-telegram">💬 Telegram Paylaş</button>
+<button onclick="window.open('https://www.instagram.com/uursemen08','_blank')">📸 Instagram</button>
+<button onclick="window.open('https://www.tiktok.com/@semenuur','_blank')">🎵 TikTok</button>
+<button onclick="window.open('https://www.youtube.com/@uursemen08','_blank')">▶️ YouTube</button>
+</div>
+</section>
+</main>
 
-    <footer>© 2025 Ayasofya Charity | Tüm hakları saklıdır</footer>
-  </div>
+<footer>© 2025 Ayasofya Charity | Tüm hakları saklıdır</footer>
+</div>
 
-  <div id
+<!-- Popup -->
+<div class="modal-backdrop" id="thank-modal" role="dialog" aria-modal="true">
+<div class="modal">
+<h3>Teşekkürler! 🙏</h3>
+<p>Bağışınız alındı.</p>
+<button class="close-btn" id="close-modal">Kapat</button>
+</div>
+</div>
+
+<script>
+const walletStatus=document.getElementById('wallet-status');
+const donationBtn=document.getElementById('send-donation');
+const donationSelect=document.getElementById('donation-amount');
+const paymentStatus=document.getElementById('payment-status');
+const logo=document.getElementById('site-logo');
+const modal=document.getElementById('thank-modal');
+const closeModal=document.getElementById('close-modal');
+
+// Sosyal paylaşım
+document.getElementById('share-x').addEventListener('click',()=>{window.open(`https://x.com/intent/tweet?text=Ayasofya%20Charity%20bağış%20platformu!%20https://nemes08.github.io/ayasofyacharity-new`,'_blank')});
+document.getElementById('share-facebook').addEventListener('click',()=>{window.open(`https://www.facebook.com/sharer/sharer.php?u=https://nemes08.github.io/ayasofyacharity-new&t=Ayasofya%20Charity%20bağış%20platformu`,'_blank')});
+document.getElementById('share-telegram').addEventListener('click',()=>{window.open(`https://t.me/share/url?url=https://nemes08.github.io/ayasofyacharity-new&text=Ayasofya%20Charity%20bağış%20platformu`,'_blank')});
+
+// Simule bağlantı
+setTimeout(()=>{
+walletStatus.textContent="✅ Valide bağlantı sağlandı!";
+walletStatus.style.opacity=1;
+walletStatus.classList.add('pulse');
+logo.classList.add('spin');
+donationBtn.disabled
