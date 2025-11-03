@@ -65,6 +65,57 @@
 
   <section>
     <h2>Bağış Yap</h2>
+    <section>
+  <h2>Bağış Miktarını Seç</h2>
+  <select id="donation-amount">
+    <option value="1">1 Pi</option>
+    <option value="5">5 Pi</option>
+    <option value="10">10 Pi</option>
+  </select>
+  <br><br>
+  <button id="send-donation">Bağışı Gönder</button>
+  <p id="payment-status" style="color:green; margin-top:10px;"></p>
+</section>
+
+<script>
+  const sendDonationButton = document.getElementById("send-donation");
+  const paymentStatus = document.getElementById("payment-status");
+
+  sendDonationButton.addEventListener("click", async () => {
+    try {
+      const amount = document.getElementById("donation-amount").value;
+
+      const paymentData = {
+        amount: amount,
+        memo: "Ayasofya Charity Bağışı",
+        metadata: { project: "Ayasofya Charity", type: "donation" }
+      };
+
+      const paymentCallbacks = {
+        onReadyForServerApproval: (paymentId) => {
+          console.log("Onay bekleniyor:", paymentId);
+        },
+        onReadyForServerCompletion: (paymentId, txid) => {
+          console.log("Tamamlandı:", paymentId, txid);
+          paymentStatus.innerHTML = "✅ Bağış başarıyla gönderildi! Teşekkür ederiz 🙏";
+        },
+        onCancel: (paymentId) => {
+          paymentStatus.innerHTML = "❌ Bağış iptal edildi.";
+        },
+        onError: (error, payment) => {
+          console.error("Hata:", error);
+          paymentStatus.innerHTML = "⚠️ Bir hata oluştu. Lütfen tekrar deneyin.";
+        }
+      };
+
+      const payment = await Pi.createPayment(paymentData, paymentCallbacks);
+      console.log("Ödeme oluşturuldu:", payment);
+    } catch (error) {
+      console.error("Bağış hatası:", error);
+      paymentStatus.innerHTML = "⚠️ Bağış işlemi başlatılamadı.";
+    }
+  });
+</script>
     <button id="pi-donate">Pi Wallet ile Bağlan</button>
     <p id="status" style="color:green; margin-top:10px;">✅ Pi SDK yüklendi. Pi Browser içindesiniz.</p>
   </section>
