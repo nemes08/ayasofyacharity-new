@@ -265,5 +265,53 @@
       modal.classList.remove('show');
     });
   </script>
+  <!-- Mini Bağış Fişi Script -->
+<script>
+  const donateBtn = document.querySelector('button[type="submit"], button#donate, .donateBtn');
+
+  if (donateBtn) {
+    donateBtn.addEventListener('click', () => {
+      const select = document.querySelector('select');
+      const amount = select ? select.value : '1';
+      const date = new Date().toLocaleDateString('tr-TR');
+
+      const receipt = document.createElement('div');
+      receipt.className = 'receipt';
+      receipt.innerHTML = `
+        <strong>Teşekkürler 🙏</strong><br>
+        ${amount} Pi bağışladınız<br>
+        <small>${date}</small>
+      `;
+      document.body.appendChild(receipt);
+
+      setTimeout(() => receipt.remove(), 3000);
+    });
+  }
+</script>
+
+<style>
+.receipt {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  border: 2px solid #4CAF50;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+  padding: 12px 20px;
+  color: #333;
+  font-size: 15px;
+  font-weight: 500;
+  animation: fadeInOut 3s forwards;
+  z-index: 9999;
+}
+@keyframes fadeInOut {
+  0% {opacity: 0; transform: translate(-50%, 20px);}
+  10% {opacity: 1; transform: translate(-50%, 0);}
+  90% {opacity: 1;}
+  100% {opacity: 0; transform: translate(-50%, 20px);}
+}
+</style>
 </body>
 </html>
