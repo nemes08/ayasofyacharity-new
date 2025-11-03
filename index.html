@@ -1,60 +1,101 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayasofya Charity</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://sdk.minepi.com/v2/pi-sdk.js"></script>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #fafafa;
+    }
+    header {
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    .logo {
+      width: 150px;
+      height: auto;
+    }
+    h2 {
+      color: #444;
+    }
+    section {
+      margin: 30px auto;
+      max-width: 600px;
+      padding: 10px;
+    }
+    button {
+      background-color: #8b5cf6;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #7c3aed;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #777;
+      padding: 10px;
+    }
+  </style>
 </head>
 <body>
-  <header style="text-align:center; margin-top:20px;">
-  <img src="https://nemes08.github.io/ayasofyacharity-new/images/logo.png" alt="Ayasofya Logo" width="180" style="border-radius:12px;">
 
-  <main style="text-align:center; margin-top:40px;">
-    <section>
-      <h2>Hakkımızda</h2>
-      <p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
-    </section>
+  <header>
+    <img src="images/logo.png" alt="Ayasofya Logo" class="logo">
+    <h1>Ayasofya Charity</h1>
+  </header>
 
-    <section style="margin-top:30px;">
-      <h2>Bağış Yap</h2>
-      <button id="pi-button" style="padding:12px 24px; background-color:purple; color:white; border:none; border-radius:8px; cursor:pointer;">
-        Pi Wallet ile Bağlan
-      </button>
-      <div id="pi-status" style="margin-top:12px;color:#444;"></div>
-    </section>
-  </main>
+  <section>
+    <h2>Hakkımızda</h2>
+    <p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur. 
+    Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
+  </section>
 
-  <footer style="text-align:center; margin-top:60px; font-size:14px; color:#555;">
-    <p>© 2025 Ayasofya Charity | Tüm hakları saklıdır.</p>
+  <section>
+    <h2>Bağış Yap</h2>
+    <button id="pi-donate">Pi Wallet ile Bağlan</button>
+    <p id="status" style="color:green; margin-top:10px;">✅ Pi SDK yüklendi. Pi Browser içindesiniz.</p>
+  </section>
+
+  <footer>
+    © 2025 Ayasofya Charity | Tüm hakları saklıdır
   </footer>
 
+  <!-- Pi SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <script>
-    const piButton = document.getElementById('pi-button');
-    const piStatus = document.getElementById('pi-status');
+    // SDK'yı başlat
+    Pi.init({ version: "2.0" });
 
-    if (window.Pi) {
-      piStatus.textContent = "✅ Pi SDK yüklendi. Pi Browser içindesiniz.";
-      Pi.init({ version: "2.0" });
+    // Bağış butonu
+    const donateButton = document.getElementById("pi-donate");
+    donateButton.addEventListener("click", async () => {
+      try {
+        const scopes = ['payments'];
+        const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+        console.log('Kullanıcı bilgileri:', auth.user);
+        alert("Bağlantı başarılı! Artık bağış yapabilirsiniz 🙏");
+      } catch (err) {
+        console.error(err);
+        alert("Bağlantı başarısız. Lütfen Pi Browser içinde tekrar deneyin.");
+      }
+    });
 
-      piButton.addEventListener('click', async () => {
-        try {
-          const scopes = ['username', 'payments'];
-          const user = await Pi.authenticate(scopes);
-          console.log("Kullanıcı bağlandı:", user);
-          alert(`Hoş geldin ${user.username}! Pi Wallet bağlantısı başarılı.`);
-        } catch (err) {
-          console.error(err);
-          alert("Bağlantı sırasında hata oluştu.");
-        }
-      });
-    } else {
-      piStatus.textContent = "❌ Pi SDK yüklenmedi. Lütfen bu sayfayı Pi Browser'da açın.";
-      piButton.addEventListener('click', () => {
-        alert("Lütfen bu sayfayı Pi Browser içinde açınız!");
-      });
+    // Eksik ödemeleri kontrol
+    function onIncompletePaymentFound(payment) {
+      console.log('Eksik ödeme bulundu:', payment);
     }
   </script>
 </body>
