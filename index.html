@@ -6,21 +6,35 @@
   <title>Ayasofya Charity</title>
   <style>
     body { font-family: Arial; text-align:center; background:#f9f9f9; padding:20px; }
-    .logo { width: 220px; height:auto; border-radius:12px; }
-    button { background-color: purple; color:white; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; margin-top:10px; }
-    button:disabled { background-color: #aaa; cursor: not-allowed; }
+    .logo { width:220px; border-radius:12px; margin-bottom:10px; }
+    button { background:purple; color:#fff; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; margin-top:10px; }
+    button:disabled { background:#aaa; cursor:not-allowed; }
+
+    /* --- Valide bağlantı animasyonu --- */
+    #wallet-status {
+      color:green;
+      font-weight:bold;
+      opacity:0;
+      transition:opacity 1s ease-in-out;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { text-shadow:0 0 0px green; }
+      50% { text-shadow:0 0 10px lime; }
+      100% { text-shadow:0 0 0px green; }
+    }
   </style>
 </head>
 <body>
 
-  <img src="images/logo.png" alt="Ayasofya Logo" class="logo"><br><br>
+  <img src="images/logo.png" alt="Ayasofya Logo" class="logo">
   <h1>Ayasofya Charity</h1>
 
   <h2>Hakkımızda</h2>
-  <p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
+  <p>Ayasofya Charity, ihtiyaç sahiplerine destek olmak amacıyla kurulmuş bir bağış platformudur.  
+  Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
 
   <h2>Bağış Yap</h2>
-
   <p id="wallet-status">🔄 Bağlantı kontrol ediliyor...</p>
 
   <section>
@@ -39,58 +53,43 @@
 
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <script>
-    Pi.init({ version: "2.0" });
+    Pi.init({ version:"2.0" });
 
-    const walletStatus = document.getElementById("wallet-status");
-    const sendDonationButton = document.getElementById("send-donation");
-    const paymentStatus = document.getElementById("payment-status");
+    const walletStatus=document.getElementById("wallet-status");
+    const sendDonationButton=document.getElementById("send-donation");
+    const paymentStatus=document.getElementById("payment-status");
 
-    // Önce cüzdan bağlantısını kontrol et
-    async function checkWallet() {
-      try {
-        const auth = await Pi.authenticate(['payments'], () => {});
-        walletStatus.innerHTML = "✅ Valide bağlantı sağlandı!";
-        sendDonationButton.disabled = false; // Butonu aktif et
-      } catch (err) {
-        console.error("Cüzdan bağlantısı hatası:", err);
-        walletStatus.innerHTML = "❌ Cüzdan bağlanamadı. Lütfen Pi Browser içinde tekrar deneyin.";
-        sendDonationButton.disabled = true;
+    async function connectWallet(){
+      try{
+        const auth=await Pi.authenticate(['payments'],()=>{});
+        walletStatus.innerHTML="✅ Valide bağlantı sağlandı!";
+        walletStatus.style.opacity=1;
+        sendDonationButton.disabled=false;
+      }catch(err){
+        console.error("Bağlantı hatası:",err);
+        walletStatus.innerHTML="❌ Cüzdan bağlanamadı. Lütfen Pi Browser içinde tekrar deneyin.";
+        walletStatus.style.color="red";
+        walletStatus.style.opacity=1;
       }
     }
+    connectWallet();
 
-    checkWallet();
+    sendDonationButton.addEventListener("click",async()=>{
+      try{
+        const amount=document.getElementById("donation-amount").value;
+        const paymentData={amount,memo:"Ayasofya Charity Bağışı",metadata:{project:"Ayasofya Charity",type:"donation"}};
 
-    // Bağış gönderme işlemi
-    sendDonationButton.addEventListener("click", async () => {
-      try {
-        const amount = document.getElementById("donation-amount").value;
-        const paymentData = {
-          amount: amount,
-          memo: "Ayasofya Charity Bağışı",
-          metadata: { project: "Ayasofya Charity", type: "donation" }
+        const paymentCallbacks={
+          onReadyForServerApproval:(id)=>console.log("Onay bekleniyor:",id),
+          onReadyForServerCompletion:(id,tx)=>{paymentStatus.innerHTML="✅ Bağış başarıyla gönderildi! Teşekkür ederiz 🙏";},
+          onCancel:()=>paymentStatus.innerHTML="❌ Bağış iptal edildi.",
+          onError:(err)=>{console.error("Hata:",err);paymentStatus.innerHTML="⚠️ Bir hata oluştu. Lütfen tekrar deneyin.";}
         };
 
-        const paymentCallbacks = {
-          onReadyForServerApproval: (paymentId) => {
-            console.log("Onay bekleniyor:", paymentId);
-          },
-          onReadyForServerCompletion: (paymentId, txid) => {
-            console.log("Tamamlandı:", paymentId, txid);
-            paymentStatus.innerHTML = "✅ Bağış başarıyla gönderildi! Teşekkür ederiz 🙏";
-          },
-          onCancel: (paymentId) => {
-            paymentStatus.innerHTML = "❌ Bağış iptal edildi.";
-          },
-          onError: (error, payment) => {
-            console.error("Hata:", error);
-            paymentStatus.innerHTML = "⚠️ Bir hata oluştu. Lütfen tekrar deneyin.";
-          }
-        };
-
-        await Pi.createPayment(paymentData, paymentCallbacks);
-      } catch (error) {
-        console.error("Bağış hatası:", error);
-        paymentStatus.innerHTML = "⚠️ Bağış işlemi başlatılamadı.";
+        await Pi.createPayment(paymentData,paymentCallbacks);
+      }catch(err){
+        console.error("Bağış hatası:",err);
+        paymentStatus.innerHTML="⚠️ Bağış işlemi başlatılamadı.";
       }
     });
   </script>
