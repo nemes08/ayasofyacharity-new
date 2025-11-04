@@ -1,92 +1,155 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ayasofya Charity</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ayasofya Charity</title>
+<link rel="icon" href="images/logo.png" />
 
-    header {
-      padding: 20px 0;
-    }
+<style>
+  :root{
+    --bg:#f9f9f9; --card:#fff; --accent:#1e40af; --green:#2e7d32; --muted:#666;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:#222}
+  .container{max-width:920px;margin:10px auto;padding:18px;}
+  header{display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px}
+  /* Logo: ortalı, belirgin */
+  .logo{width:220px;max-width:78%;height:auto;border-radius:18px;background:transparent;box-shadow:0 8px 24px rgba(0,0,0,0.08);transition:transform .25s ease}
+  .logo:hover{transform:scale(1.03)}
+  /* Kalp */
+  .heart{font-size:34px;color:#6a0dad;margin-top:6px;animation:pulse 1.4s infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.18);opacity:1}}
 
-    .logo {
-      width: 160px;
-      max-width: 80%;
-      border-radius: 16px;
-      transition: transform 0.3s ease-in-out;
-    }
+  h1{color:var(--accent);font-size:2rem;text-align:center;margin:6px 0}
+  .subtitle{color:var(--muted);text-align:center;margin:0 12px 10px 12px;line-height:1.45}
 
-    .logo:hover {
-      transform: scale(1.05);
-    }
+  section{background:var(--card);padding:18px;border-radius:12px;margin-top:12px;box-shadow:0 6px 22px rgba(2,6,23,0.03)}
+  h2{color:var(--green);text-align:center;margin:12px 0;font-size:1.4rem}
+  p{color:#333;line-height:1.6;margin:0 6px}
 
-    .heart {
-      color: #6A0DAD;
-      font-size: 28px;
-      margin-top: 10px;
-      animation: pulse 1.4s infinite;
-    }
+  .donate-section{display:flex;gap:12px;align-items:center;justify-content:center;margin-top:18px;flex-wrap:wrap}
+  select{padding:10px 12px;border-radius:10px;border:1px solid #e6e6e6;background:white;font-weight:600}
+  button.primary{background:var(--green);color:white;border:none;padding:10px 18px;border-radius:12px;font-weight:700;cursor:pointer;box-shadow:0 6px 14px rgba(46,125,50,0.12);transition:transform .12s}
+  button.primary:active{transform:scale(.98)}
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.2); opacity: 1; }
-    }
+  .validate{display:inline-flex;align-items:center;gap:8px;color:#16a34a;font-weight:700;margin-top:10px;opacity:1}
+  .validate .box{width:18px;height:18px;border-radius:4px;background:#def7ec;border:1px solid #bbf0d6;display:inline-block}
 
-    h1 {
-      color: #1a237e;
-      margin-top: 10px;
-    }
+  .socials{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+  .socials a{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:white;border:1px solid #eee;text-decoration:none;color:#222;font-weight:600;box-shadow:0 6px 14px rgba(2,6,23,0.04)}
+  footer{margin-top:20px;text-align:center;color:var(--muted);font-size:13px;padding-bottom:18px}
 
-    h2 {
-      color: #2e7d32;
-    }
+  /* Cam efektli mini fiş */
+  .receipt{
+    position:fixed;
+    left:50%;
+    bottom:28px;
+    transform:translateX(-50%);
+    z-index:9999;
+    min-width:220px;max-width:92%;
+    padding:14px 18px;border-radius:14px;
+    background:linear-gradient(145deg,#4caf50 0%,#2e7d32 100%);
+    color:#fff;font-weight:700;text-align:center;
+    box-shadow:0 12px 30px rgba(0,0,0,0.22);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    animation:receiptIn 3s forwards;
+  }
+  @keyframes receiptIn{
+    0%{opacity:0;transform:translate(-50%,18px) scale(.98)}
+    10%{opacity:1;transform:translate(-50%,0) scale(1)}
+    90%{opacity:1}
+    100%{opacity:0;transform:translate(-50%,18px) scale(.98)}
+  }
 
-    button {
-      background-color: #2e7d32;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 10px;
-    }
-
-    footer {
-      margin-top: 40px;
-      padding: 10px;
-      font-size: 14px;
-      color: #777;
-    }
-  </style>
+  @media(max-width:560px){
+    .logo{width:160px}
+    h1{font-size:1.6rem}
+    .donate-section{flex-direction:column}
+    button.primary, select{width:90%}
+  }
+</style>
 </head>
 <body>
-  <header>
-    <img src="images/logo.png" alt="Ayasofya Charity Logo" class="logo">
-    <div class="heart">💜</div>
-    <h1>Ayasofya Charity</h1>
-    <p>İhtiyaç sahiplerine destek — Pi Network üzerinden şeffaf bağış</p>
-  </header>
+  <div class="container">
+    <header>
+      <img src="images/logo.png" alt="Ayasofya Logo" class="logo" id="site-logo">
+      <div class="heart" aria-hidden="true">💜</div>
+      <h1>Ayasofya Charity</h1>
+      <div class="subtitle">İhtiyaç sahiplerine destek — Pi Network üzerinden şeffaf bağış</div>
+    </header>
 
-  <section>
-    <h2>Hakkımızda</h2>
-    <p>Ayasofya Charity, ihtiyaç sahiplerine destek amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
+    <section aria-labelledby="about">
+      <h2 id="about">Hakkımızda</h2>
+      <p>Ayasofya Charity, ihtiyaç sahiplerine destek amacıyla kurulmuş bir bağış platformudur. Pi Network ağı üzerinden güvenli ve şeffaf bağış yapılmasını sağlar.</p>
+    </section>
 
-    <h2>Bağış Yap</h2>
-    <button>Bağışı Gönder</button>
-  </section>
+    <section aria-labelledby="donate">
+      <h2 id="donate">Bağış Yap</h2>
 
-  <footer>
-    © 2025 Ayasofya Charity | Tüm hakları saklıdır
-  </footer>
+      <div class="validate" role="status" aria-live="polite">
+        <span class="box" aria-hidden="true">✔</span>
+        <span style="opacity:0.95">✅ Valide bağlantı sağlandı!</span>
+      </div>
+
+      <div class="donate-section" style="margin-top:14px;">
+        <select id="donationSelect" aria-label="Bağış miktarı">
+          <option value="1">1 Pi</option>
+          <option value="5">5 Pi</option>
+          <option value="10">10 Pi</option>
+        </select>
+
+        <button id="donateBtn" class="primary" aria-label="Bağışı gönder">Bağışı Gönder</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="share">
+      <h2 id="share">Destekle & Paylaş</h2>
+      <div class="socials" role="navigation" aria-label="Sosyal paylaşım">
+        <a href="https://x.com/uursemen2" target="_blank" rel="noopener noreferrer">🕊️ X</a>
+        <a href="https://www.facebook.com/share/1ZeKpjp33v/" target="_blank" rel="noopener noreferrer">📘 Facebook</a>
+        <a href="https://t.me/uur1453" target="_blank" rel="noopener noreferrer">💬 Telegram</a>
+        <a href="https://www.instagram.com/uursemen08" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
+        <a href="https://www.tiktok.com/@semenuur" target="_blank" rel="noopener noreferrer">🎵 TikTok</a>
+        <a href="https://www.youtube.com/@uursemen08" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
+      </div>
+    </section>
+
+    <footer>© 2025 Ayasofya Charity | Tüm hakları saklıdır</footer>
+  </div>
+
+  <script>
+    // Temiz, güvenli JS - tek bir görev: mini fiş oluştur, 3s sonra sil
+    (function(){
+      const donateBtn = document.getElementById('donateBtn');
+      const donationSelect = document.getElementById('donationSelect');
+      const logo = document.getElementById('site-logo');
+
+      donateBtn.addEventListener('click', () => {
+        const amount = donationSelect.value;
+        donateBtn.disabled = true;
+
+        // kısa logo "vuru" efekti
+        logo.style.transition = 'transform .25s';
+        logo.style.transform = 'scale(1.03)';
+        setTimeout(()=> logo.style.transform = 'scale(1)', 300);
+
+        // fişi oluştur
+        const now = new Date();
+        const dateStr = now.toLocaleString('tr-TR', { dateStyle:'short', timeStyle:'short' });
+        const receipt = document.createElement('div');
+        receipt.className = 'receipt';
+        receipt.innerHTML = `🎁 <strong>${amount} Pi</strong><br><small>${dateStr}</small><div style="font-weight:600;margin-top:6px">Teşekkürler 🙏</div>`;
+
+        document.body.appendChild(receipt);
+
+        // 3.2s sonra kaldır
+        setTimeout(()=> {
+          receipt.remove();
+          donateBtn.disabled = false;
+        }, 3200);
+      });
+    })();
+  </script>
 </body>
 </html>
