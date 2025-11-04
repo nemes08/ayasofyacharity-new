@@ -14,26 +14,47 @@
   html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:#222}
   .container{max-width:920px;margin:10px auto;padding:18px;}
   header{display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px}
-  .logo{width:240px;max-width:90%;height:auto;border-radius:18px;background:transparent;box-shadow:0 8px 24px rgba(0,0,0,0.08);transition:transform .25s ease}
-  .logo:hover{transform:scale(1.03)}
+
+  /* Gelişmiş Logo Efekti */
+  .logo{
+    width:260px;
+    max-width:90%;
+    height:auto;
+    border-radius:22px;
+    background:rgba(255,255,255,0.3);
+    box-shadow:0 10px 30px rgba(0,0,0,0.18);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    transition:transform .4s ease, box-shadow .4s ease;
+  }
+  .logo:hover{
+    transform:scale(1.07);
+    box-shadow:0 14px 38px rgba(0,0,0,0.25);
+  }
+
   .heart{font-size:34px;color:#6a0dad;margin-top:6px;animation:pulse 1.4s infinite}
   @keyframes pulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.18);opacity:1}}
+
   h1{color:var(--accent);font-size:2rem;text-align:center;margin:6px 0}
   .subtitle{color:var(--muted);text-align:center;margin:0 12px 10px 12px;line-height:1.45}
+
   section{background:var(--card);padding:18px;border-radius:12px;margin-top:12px;box-shadow:0 6px 22px rgba(2,6,23,0.03)}
   h2{color:var(--green);text-align:center;margin:12px 0;font-size:1.4rem}
   p{color:#333;line-height:1.6;margin:0 6px}
+
   .donate-section{display:flex;gap:12px;align-items:center;justify-content:center;margin-top:18px;flex-wrap:wrap}
   select{padding:10px 12px;border-radius:10px;border:1px solid #e6e6e6;background:white;font-weight:600}
   button.primary{background:var(--green);color:white;border:none;padding:10px 18px;border-radius:12px;font-weight:700;cursor:pointer;box-shadow:0 6px 14px rgba(46,125,50,0.12);transition:transform .12s}
   button.primary:active{transform:scale(.98)}
+
   .validate{display:inline-flex;align-items:center;gap:8px;color:#16a34a;font-weight:700;margin-top:10px;opacity:1}
   .validate .box{width:18px;height:18px;border-radius:4px;background:#def7ec;border:1px solid #bbf0d6;display:inline-block}
+
   .socials{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px}
   .socials a{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:white;border:1px solid #eee;text-decoration:none;color:#222;font-weight:600;box-shadow:0 6px 14px rgba(2,6,23,0.04)}
   footer{margin-top:20px;text-align:center;color:var(--muted);font-size:13px;padding-bottom:18px}
 
-  /* Cam efektli mini fiş */
+  /* Mini bağış fişi */
   .receipt{
     position:fixed;
     left:50%;
@@ -56,7 +77,7 @@
   }
 
   @media(max-width:560px){
-    .logo{width:200px}
+    .logo{width:180px}
     h1{font-size:1.6rem}
     .donate-section{flex-direction:column}
     button.primary, select{width:90%}
@@ -83,7 +104,7 @@
         <span class="box" aria-hidden="true">✔</span>
         <span style="opacity:0.95">✅ Valide bağlantı sağlandı!</span>
       </div>
-      <div class="donate-section">
+      <div class="donate-section" style="margin-top:14px;">
         <select id="donationSelect" aria-label="Bağış miktarı">
           <option value="1">1 Pi</option>
           <option value="5">5 Pi</option>
@@ -95,7 +116,7 @@
 
     <section aria-labelledby="share">
       <h2 id="share">Destekle & Paylaş</h2>
-      <div class="socials">
+      <div class="socials" role="navigation" aria-label="Sosyal paylaşım">
         <a href="https://x.com/uursemen2" target="_blank" rel="noopener noreferrer">🕊️ X</a>
         <a href="https://www.facebook.com/share/1ZeKpjp33v/" target="_blank" rel="noopener noreferrer">📘 Facebook</a>
         <a href="https://t.me/uur1453" target="_blank" rel="noopener noreferrer">💬 Telegram</a>
@@ -109,32 +130,36 @@
   </div>
 
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const donateBtn = document.getElementById('donateBtn');
-    const donationSelect = document.getElementById('donationSelect');
-    const logo = document.getElementById('site-logo');
+    (function(){
+      const donateBtn = document.getElementById('donateBtn');
+      const donationSelect = document.getElementById('donationSelect');
+      const logo = document.getElementById('site-logo');
 
-    donateBtn.addEventListener('click', () => {
-      const amount = donationSelect.value;
-      donateBtn.disabled = true;
+      donateBtn.addEventListener('click', () => {
+        const amount = donationSelect.value;
+        donateBtn.disabled = true;
 
-      logo.style.transition = 'transform .25s';
-      logo.style.transform = 'scale(1.03)';
-      setTimeout(()=> logo.style.transform = 'scale(1)', 300);
+        // Logo vuru efekti
+        logo.style.transition = 'transform .25s';
+        logo.style.transform = 'scale(1.03)';
+        setTimeout(()=> logo.style.transform = 'scale(1)', 300);
 
-      const now = new Date();
-      const dateStr = now.toLocaleString('tr-TR', { dateStyle:'short', timeStyle:'short' });
-      const receipt = document.createElement('div');
-      receipt.className = 'receipt';
-      receipt.innerHTML = `🎁 <strong>${amount} Pi</strong><br><small>${dateStr}</small><div style="font-weight:600;margin-top:6px">Teşekkürler 🙏</div>`;
-      document.body.appendChild(receipt);
+        // Fiş oluştur
+        const now = new Date();
+        const dateStr = now.toLocaleString('tr-TR', { dateStyle:'short', timeStyle:'short' });
+        const receipt = document.createElement('div');
+        receipt.className = 'receipt';
+        receipt.innerHTML = `🎁 <strong>${amount} Pi</strong><br><small>${dateStr}</small><div style="font-weight:600;margin-top:6px">Teşekkürler 🙏</div>`;
 
-      setTimeout(()=> {
-        receipt.remove();
-        donateBtn.disabled = false;
-      }, 3200);
-    });
-  });
+        document.body.appendChild(receipt);
+
+        // 3.2s sonra kaldır
+        setTimeout(()=> {
+          receipt.remove();
+          donateBtn.disabled = false;
+        }, 3200);
+      });
+    })();
   </script>
 </body>
 </html>
