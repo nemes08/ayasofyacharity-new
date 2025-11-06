@@ -139,13 +139,14 @@
   <div class="receipt" id="receipt"></div>
 
   <script>
-    const recipient = "uur1453";
+    const recipient = "uur1453"; // Pi Wallet kullanıcı adı
 
     function sendPi(amount) {
       const memo = "Ayasofya Charity Bağışı";
       const url = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
 
-      if(navigator.userAgent.includes("PiBrowser")) {
+      // Pi Browser veya Pi Wallet üzerinden direkt aç
+      if (navigator.userAgent.includes("PiBrowser") || navigator.userAgent.includes("PiWallet")) {
         window.location.href = url;
       } else {
         alert("Lütfen Pi Browser veya Pi Wallet üzerinden bağış yapın.");
