@@ -1,154 +1,113 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ayasofya Charity</title>
+  <link rel="icon" href="images/logo.png" />
+
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 0;
-      text-align: center;
-      background: #fdfdfd;
+      font-family: "Poppins", sans-serif;
+      background-color: #f9f9f9;
       color: #222;
+      overflow-x: hidden;
     }
 
-    header {
-      padding: 20px;
+    /* 🔹 Yüklenme Ekranı */
+    #loading {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+    #loading img {
+      width: 80px;
+      animation: spin 2s linear infinite;
+    }
+    #loading h2 {
+      font-size: 1.5em;
+      color: #a52a2a;
+      margin-top: 15px;
+    }
+    @keyframes spin {
+      from {transform: rotate(0deg);}
+      to {transform: rotate(360deg);}
     }
 
-    .logo {
-      width: 160px;
-      height: auto;
-      margin-bottom: 10px;
-      animation: pulse 2s infinite;
+    /* 🔹 Ana içerik (gizli başlayacak) */
+    main {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-    }
-
-    h1 {
-      font-size: 26px;
-      margin: 10px 0;
-    }
-
-    p {
-      color: #555;
-    }
-
-    .donate-section {
-      margin-top: 20px;
-    }
-
-    button {
-      background-color: #7b4bff;
+    /* 🔹 Buton Tasarımları */
+    .donate-btn, .wallet-btn {
+      background: linear-gradient(90deg, #a52a2a, #f5b041);
       color: white;
       border: none;
+      padding: 14px 28px;
+      margin: 12px;
+      font-size: 1.1em;
       border-radius: 8px;
-      padding: 10px 16px;
-      margin: 5px;
-      font-size: 15px;
       cursor: pointer;
-      transition: transform 0.2s;
+      position: relative;
+      overflow: hidden;
+      transition: 0.3s;
     }
 
-    button:hover {
-      transform: scale(1.05);
+    /* Hover ışık efekti */
+    .donate-btn::before, .wallet-btn::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.3);
+      transform: skewX(-20deg);
+      transition: left 0.5s;
+    }
+    .donate-btn:hover::before, .wallet-btn:hover::before {
+      left: 100%;
     }
 
-    footer {
-      margin-top: 30px;
-      font-size: 14px;
-      color: #777;
+    .wallet-btn {
+      background: linear-gradient(90deg, #8e44ad, #5dade2);
     }
-
-    .socials a {
-      margin: 0 5px;
-      text-decoration: none;
-      font-size: 22px;
-    }
-
-    /* 💜 Mini Bağış Fişi */
-    .receipt {
-      position: fixed;
-      bottom: 40px;
-      right: 20px;
-      background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      padding: 16px 20px;
-      display: none;
-      animation: fadeIn 0.4s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    /* 💖 Kalp animasyonu */
-    .heart {
-      color: #ff3b7a;
-      font-size: 30px;
-      animation: beat 1.3s infinite;
-    }
-
-    @keyframes beat {
-      0%, 40%, 80%, 100% { transform: scale(1); }
-      20%, 60% { transform: scale(1.3); }
-    }
-
   </style>
 </head>
 <body>
+  <!-- 🔹 Yüklenme Ekranı -->
+  <div id="loading">
+    <img src="images/logo.png" alt="Logo" />
+    <h2>Ayasofya Charity Yükleniyor...</h2>
+  </div>
 
-  <header>
-    <img src="images/logo.png" alt="Ayasofya Charity Logo" class="logo">
-    <div class="heart">💜</div>
+  <!-- 🔹 Ana İçerik -->
+  <main>
     <h1>Ayasofya Charity</h1>
-    <p>İhtiyaç sahiplerine destek — Pi Network üzerinden şeffaf bağış</p>
-  </header>
-
-  <section class="donate-section">
-    <h2>Bağış Yap</h2>
-    <p>✅ Valide bağlantı sağlandı!</p>
-    <div>
-      <button onclick="showReceipt('1 Pi')">1 Pi</button>
-      <button onclick="showReceipt('5 Pi')">5 Pi</button>
-      <button onclick="showReceipt('10 Pi')">10 Pi</button>
-      <button onclick="showReceipt('Özel Miktar')">Bağışı Gönder</button>
-    </div>
-  </section>
-
-  <section class="socials">
-    <h3>Destekle & Paylaş</h3>
-    <a href="https://x.com/uursemen2" target="_blank">🕊️</a>
-    <a href="https://facebook.com/share/1ZeKpjp33v" target="_blank">📘</a>
-    <a href="https://t.me/uur1453" target="_blank">💬</a>
-    <a href="https://instagram.com/uursemen08" target="_blank">📸</a>
-    <a href="https://tiktok.com/@semenuur" target="_blank">🎵</a>
-    <a href="https://youtube.com/@uursemen08" target="_blank">▶️</a>
-  </section>
-
-  <footer>
-    © 2025 Ayasofya Charity | Tüm hakları saklıdır
-  </footer>
-
-  <!-- Mini Bağış Fişi -->
-  <div class="receipt" id="receipt"></div>
+    <p>Pi Network üzerinde bağış yaparak iyiliği paylaşın 💜</p>
+    <button class="donate-btn">💎 Bağış Yap</button>
+    <button class="wallet-btn" onclick="connectWallet()">🔗 Pi Wallet ile Giriş</button>
+  </main>
 
   <script>
-    function showReceipt(amount) {
-      const r = document.getElementById('receipt');
-      const date = new Date().toLocaleString('tr-TR');
-      r.innerHTML = `<strong>Teşekkürler!</strong><br>${amount} bağışladınız 💜<br><small>${date}</small>`;
-      r.style.display = 'block';
-      setTimeout(() => r.style.display = 'none', 3000);
+    // 🔸 Sayfa yüklenince loading ekranı kalksın
+    window.addEventListener("load", () => {
+      document.getElementById("loading").style.display = "none";
+      document.querySelector("main").style.display = "block";
+    });
+
+    // 🔸 Gelecekte Pi SDK için hazırlık
+    function connectWallet() {
+      alert("Pi Wallet bağlantı hazırlığı başlatıldı...");
     }
   </script>
-
 </body>
 </html>
