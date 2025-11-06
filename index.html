@@ -1,138 +1,93 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayasofya Charity</title>
-  <link rel="icon" href="images/logo.png" />
-
+  <link rel="icon" href="images/logo.png">
   <style>
-    :root {
-      --bg: #fafafa;
-      --text: #222;
-      --accent: #6a0dad;
-    }
-
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
+      padding: 0;
+      background: #f9f9ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
+      color: #333;
     }
 
-    /* Yüklenme ekranı */
-    #loading {
-      position: fixed;
-      inset: 0;
-      background: white;
+    .container {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
-      z-index: 999;
-      transition: opacity 0.6s ease;
+      align-items: center;
+      height: 100vh;
     }
 
-    #loading img {
-      width: 100px;
-      animation: rotate 2s linear infinite;
+    img.logo {
+      width: 180px;
+      height: auto;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      animation: spin 4s linear infinite;
     }
 
-    @keyframes rotate {
+    @keyframes spin {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
 
-    /* Sayfa yüklendiğinde görünen sabit logo */
-    .top-logo {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 1000;
-    }
-
-    .top-logo img {
-      width: 60px;
-      height: 60px;
-      border-radius: 12px;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.1); opacity: 0.9; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    main {
-      margin-top: 100px;
-      padding: 20px;
-    }
-
     h1 {
-      color: var(--accent);
-      font-size: 1.8em;
+      font-size: 28px;
+      color: #6a1b9a;
+      margin-bottom: 10px;
     }
 
     p {
-      font-size: 1.1em;
-      margin: 15px 0;
+      font-size: 18px;
+      margin-bottom: 25px;
     }
 
-    .btn {
-      background: var(--accent);
+    .buttons a {
+      display: inline-block;
+      background: #6a1b9a;
       color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1.1em;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
+      padding: 12px 22px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 5px;
+      transition: 0.3s;
     }
 
-    .btn:hover {
-      background: #8a2be2;
+    .buttons a:hover {
+      background: #8e24aa;
     }
 
     footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #555;
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 14px;
+      color: #777;
     }
   </style>
 </head>
-
 <body>
-  <!-- Açılış logosu -->
-  <div id="loading">
-    <img src="images/logo.png" alt="Logo" class="rotate">
-  </div>
 
-  <!-- Sayfada kalıcı logo -->
-  <header class="top-logo">
-    <img src="images/logo.png" alt="Ayasofya Charity Logo">
-  </header>
-
-  <main>
+  <div class="container">
+    <img src="images/logo.png" alt="Ayasofya Charity Logo" class="logo">
     <h1>Ayasofya Charity</h1>
     <p>Pi Network üzerinde bağış yaparak iyiliği paylaşın 💜</p>
-    <button class="btn">💎 Bağış Yap</button>
-    <button class="btn" style="margin-left:10px;">🔗 Pi Wallet ile Giriş</button>
-  </main>
+    <div class="buttons">
+      <a href="#">💎 Bağış Yap</a>
+      <a href="#">🔗 Pi Wallet ile Giriş</a>
+    </div>
+  </div>
 
   <footer>
     © 2025 Ayasofya Charity | Tüm hakları saklıdır.
   </footer>
 
-  <script>
-    window.addEventListener("load", () => {
-      const loader = document.getElementById("loading");
-      setTimeout(() => {
-        loader.style.opacity = "0";
-        setTimeout(() => loader.style.display = "none", 600);
-      }, 1000);
-    });
-  </script>
 </body>
 </html>
