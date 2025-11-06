@@ -98,12 +98,12 @@
   </main>
 
   <script>
-    // 🔸 Sayfa yüklenince loading ekranı kalksın
     window.addEventListener("load", () => {
-      document.getElementById("loading").style.display = "none";
-      document.querySelector("main").style.display = "block";
-    });
-
+  setTimeout(() => {
+    document.getElementById("loading").style.display = "none";
+    document.querySelector("main").style.display = "block";
+  }, 1200); // 1.2 saniye beklet
+});
     // 🔸 Gelecekte Pi SDK için hazırlık
     function connectWallet() {
       alert("Pi Wallet bağlantı hazırlığı başlatıldı...");
