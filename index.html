@@ -14,9 +14,7 @@
       color: #222;
     }
 
-    header {
-      padding: 20px;
-    }
+    header { padding: 20px; }
 
     .logo {
       width: 160px;
@@ -30,18 +28,10 @@
       50% { transform: scale(1.08); }
     }
 
-    h1 {
-      font-size: 26px;
-      margin: 10px 0;
-    }
+    h1 { font-size: 26px; margin: 10px 0; }
+    p { color: #555; }
 
-    p {
-      color: #555;
-    }
-
-    .donation-section {
-      margin-top: 20px;
-    }
+    .donation-section { margin-top: 20px; }
 
     button {
       background-color: #7b4bff;
@@ -54,16 +44,9 @@
       cursor: pointer;
       transition: transform 0.2s;
     }
+    button:hover { transform: scale(1.05); }
 
-    button:hover {
-      transform: scale(1.05);
-    }
-
-    footer {
-      margin-top: 30px;
-      font-size: 14px;
-      color: #777;
-    }
+    footer { margin-top: 30px; font-size: 14px; color: #777; }
 
     .socials a {
       margin: 0 5px;
@@ -114,10 +97,10 @@
     <h2>Bağış Yap</h2>
     <p>✅ Valide bağlantı sağlandı!</p>
     <div>
-      <button onclick="showReceipt('1 Pi')">1 Pi</button>
-      <button onclick="showReceipt('5 Pi')">5 Pi</button>
-      <button onclick="showReceipt('10 Pi')">10 Pi</button>
-      <button onclick="showReceipt('Özel Miktar')">Bağışı Gönder</button>
+      <button onclick="sendPi('1')">1 Pi</button>
+      <button onclick="sendPi('5')">5 Pi</button>
+      <button onclick="sendPi('10')">10 Pi</button>
+      <button onclick="customDonation()">Bağışı Gönder</button>
     </div>
   </section>
 
@@ -139,6 +122,26 @@
   <div class="receipt" id="receipt"></div>
 
   <script>
+    const recipient = "uur1453"; // Senin Pi Wallet kullanıcı adın
+
+    function sendPi(amount) {
+      const memo = "Ayasofya Charity Bağışı";
+      const url = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
+
+      if(navigator.userAgent.includes("PiBrowser")) {
+        window.location.href = url;
+      } else {
+        alert("Lütfen Pi Browser veya Pi Wallet üzerinden bağış yapın.");
+      }
+
+      showReceipt(amount + " Pi");
+    }
+
+    function customDonation() {
+      let amount = prompt("Ne kadar Pi bağışlamak istiyorsunuz?");
+      if(amount) sendPi(amount);
+    }
+
     function showReceipt(amount) {
       const r = document.getElementById('receipt');
       const date = new Date().toLocaleString('tr-TR');
