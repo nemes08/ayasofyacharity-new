@@ -145,8 +145,12 @@
       const memo = "Ayasofya Charity Bağışı";
       const url = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
 
-      // Her zaman yönlendirme yap
-      window.location.href = url;
+      // Sadece Pi Browser veya Pi Wallet dışında uyarı göster
+      if (navigator.userAgent.includes("PiBrowser") || navigator.userAgent.includes("PiWallet")) {
+        window.location.href = url;
+      } else {
+        alert("Bağış yapmak için lütfen Pi Browser veya Pi Wallet uygulamasını kullanın.");
+      }
 
       showReceipt(amount + " Pi");
     }
