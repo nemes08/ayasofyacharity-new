@@ -7,87 +7,97 @@
   <link rel="icon" href="images/logo.png">
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9ff;
+      color: #333;
+      text-align: center;
       margin: 0;
       padding: 0;
-      background: #f9f9ff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      text-align: center;
-      color: #333;
     }
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    header {
+      background-color: #6a1b9a;
+      color: white;
+      padding: 15px 0;
+      font-size: 22px;
+      font-weight: bold;
     }
 
     img.logo {
-      width: 180px;
-      height: auto;
-      border-radius: 16px;
-      margin-bottom: 20px;
-      animation: spin 6s linear infinite;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      width: 120px;
+      margin-top: 20px;
+      border-radius: 12px;
     }
 
     h1 {
-      font-size: 28px;
+      margin-top: 10px;
       color: #6a1b9a;
-      margin-bottom: 10px;
+      font-size: 26px;
     }
 
     p {
-      font-size: 18px;
+      font-size: 16px;
+      color: #444;
       margin-bottom: 25px;
     }
 
-    .buttons a {
-      display: inline-block;
-      background: #6a1b9a;
+    .donation-buttons {
+      margin: 20px 0;
+    }
+
+    .donation-buttons button {
+      background-color: #6a1b9a;
       color: white;
-      padding: 12px 22px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
+      border: none;
+      padding: 10px 20px;
       margin: 5px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
       transition: 0.3s;
     }
 
-    .buttons a:hover {
-      background: #8e24aa;
+    .donation-buttons button:hover {
+      background-color: #8e24aa;
     }
 
     footer {
-      position: fixed;
-      bottom: 10px;
-      width: 100%;
-      text-align: center;
+      background-color: #f0f0f0;
+      padding: 15px;
       font-size: 14px;
-      color: #777;
+      color: #555;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <img src="images/logo.png" alt="Ayasofya Charity Logo" class="logo">
-    <h1>Ayasofya Charity</h1>
-    <p>Pi Network üzerinde bağış yaparak iyiliği paylaşın 💜</p>
-    <div class="buttons">
-      <a href="#">💎 Bağış Yap</a>
-      <a href="#">🔗 Pi Wallet ile Giriş</a>
-    </div>
+  <header>AYASOFYA CHARITY</header>
+
+  <img src="images/logo.png" alt="Ayasofya Charity Logo" class="logo">
+
+  <h1>Ayasofya Charity</h1>
+  <p>İhtiyaç sahiplerine destek - Pi Network üzerinden şeffaf bağış</p>
+
+  <div class="donation-buttons">
+    <button>1 Pi</button>
+    <button>5 Pi</button>
+    <button>10 Pi</button>
   </div>
 
-  <footer>
-    © 2025 Ayasofya Charity | Tüm hakları saklıdır.
-  </footer>
+  <p><strong>Valide bağlantı sağlandı!</strong></p>
+
+  <div class="donation-buttons">
+    <button>Bağışı Gönder</button>
+  </div>
+
+  <div class="donation-buttons">
+    <button>Destekle & Paylaş</button>
+  </div>
+
+  <footer>© 2025 Ayasofya Charity | Tüm hakları saklıdır.</footer>
 
 </body>
 </html>
