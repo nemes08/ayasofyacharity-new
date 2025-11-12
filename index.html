@@ -5,20 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayasofya Charity</title>
 
-  <!-- Uygulama simgesi -->
+  <!-- Logo ve Manifest -->
   <link rel="icon" href="images/logo.png" type="image/png">
-
-  <!-- Manifest dosyası bağlantısı -->
   <link rel="manifest" href="manifest.json">
 
-  <!-- Tema renkleri -->
+  <!-- Tema ve arka plan renkleri -->
   <meta name="theme-color" content="#d4af37">
   <meta name="background-color" content="#ffffff">
 
+  <!-- Stil -->
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #fff;
+      background-color: #fdfdfd;
       color: #333;
       margin: 0;
       padding: 0;
@@ -29,40 +28,83 @@
       background-color: #d4af37;
       color: white;
       padding: 20px;
-      font-size: 24px;
+      font-size: 28px;
       font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      animation: slideDown 1s ease-out;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     main {
       padding: 40px 20px;
+      animation: fadeIn 1.2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    img.logo {
+      width: 140px;
+      height: auto;
+      margin-top: 20px;
+      animation: logoBounce 1s ease;
+    }
+
+    @keyframes logoBounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-15px); }
+      60% { transform: translateY(-8px); }
+    }
+
+    h2 {
+      color: #444;
+      margin-top: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #555;
+      max-width: 600px;
+      margin: 20px auto;
     }
 
     button {
       background-color: #d4af37;
       color: white;
       border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
+      padding: 14px 28px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 18px;
+      transition: background-color 0.3s, transform 0.2s;
     }
 
     button:hover {
       background-color: #b9962d;
+      transform: scale(1.05);
     }
 
     footer {
-      margin-top: 40px;
-      padding: 10px;
+      margin-top: 50px;
+      padding: 15px;
       font-size: 14px;
       color: #666;
     }
 
-    img.logo {
-      width: 120px;
-      height: auto;
-      margin-top: 20px;
+    footer a {
+      color: #d4af37;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -74,8 +116,9 @@
     <img src="images/logo.png" alt="Ayasofya Charity Logo" class="logo">
     <h2>Pi Network Ekosisteminde Hayır İçin Birlikteyiz</h2>
     <p>Ayasofya Charity, Pi Network topluluğunda gönüllü bağışları merkeziyetsiz şekilde toplar.</p>
-    
-    <button onclick="window.location.href='https://minepi.com/'">1 Pi ile Bağış Yap</button>
+
+    <!-- Buton: Pi Browser uyumlu, yeni pencerede açılıyor -->
+    <button onclick="window.open('https://minepi.com/', '_blank')">1 Pi ile Bağış Yap</button>
   </main>
 
   <footer>
