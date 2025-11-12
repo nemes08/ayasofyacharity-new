@@ -1,119 +1,88 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ayasofya Charity</title>
-<style>
-body {
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  background: #fdfdfd;
-  color: #222;
-}
-header { padding: 30px 20px; }
-.logo { width: 160px; height: auto; margin-bottom: 10px; animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{transform:scale(1);}50%{transform:scale(1.08);} }
-h1{font-size:28px;margin:10px 0;}
-h2{font-size:24px;margin:10px 0;}
-p{color:#555;font-size:16px;}
-button {
-  background:#7b4bff;
-  color:#fff;
-  border:none;
-  border-radius:12px;
-  padding:12px 20px;
-  margin:5px;
-  font-size:16px;
-  cursor:pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-button:hover { transform: scale(1.05); }
-.socials a {
-  margin: 0 6px;
-  text-decoration: none;
-  font-size:26px;
-  transition: transform 0.2s;
-}
-.socials a:hover { transform: scale(1.2); }
-.receipt {
-  position: fixed;
-  bottom: 40px;
-  right: 20px;
-  background:#fff;
-  border-radius:16px;
-  padding:16px 20px;
-  display:none;
-  box-shadow:0 6px 20px rgba(0,0,0,0.15);
-}
-.heart { font-size:36px; color:#ff3b7a; margin-bottom:10px; animation: beat 1.3s infinite; }
-@keyframes beat { 0%,40%,80%,100%{transform:scale(1);}20%,60%{transform:scale(1.3);} }
-footer { margin-top:30px; font-size:14px; color:#777; margin-bottom:20px; }
-</style>
-</head>
-<body>
-<header>
-<img src="images/logo.png" alt="Ayasofya Charity Logosu" class="logo">
-<div class="heart">💜</div>
-<h1>Ayasofya Charity</h1>
-<p>İhtiyaç sahiplerine destek — Pi Network üzerinden şeffaf bağış</p>
-</header>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayasofya Charity</title>
 
-<section>
-<h2>Bağış Yap</h2>
-<p>✅ Valide bağlantı sağlandı!</p>
-<div>
-<button onclick="sendPi('1')">1 Pi</button>
-<button onclick="sendPi('5')">5 Pi</button>
-<button onclick="sendPi('10')">10 Pi</button>
-<button onclick="customDonation()">Bağışı Gönder</button>
-</div>
-</section>
+  <!-- Uygulama simgesi -->
+  <link rel="icon" href="images/logo.png" type="image/png">
 
-<section class="socials">
-<h3>Destekle & Paylaş</h3>
-<a href="https://x.com/uursemen2" target="_blank">🕊️</a>
-<a href="https://facebook.com/share/1ZeKpjp33v" target="_blank">📘</a>
-<a href="https://t.me/uur1453" target="_blank">💬</a>
-<a href="https://instagram.com/uursemen08" target="_blank">📸</a>
-<a href="https://tiktok.com/@semenuur" target="_blank">🎵</a>
-<a href="https://youtube.com/@uursemen08" target="_blank">▶️</a>
-</section>
+  <!-- Manifest dosyası bağlantısı -->
+  <link rel="manifest" href="manifest.json">
 
-<footer>© 2025 Ayasofya Charity | Tüm hakları saklıdır</footer>
+  <!-- Tema renkleri -->
+  <meta name="theme-color" content="#d4af37">
+  <meta name="background-color" content="#ffffff">
 
-<div class="receipt" id="receipt"></div>
-
-<script>
-const recipient = "uur1453"; // Pi Wallet kullanıcı adı
-
-function sendPi(amount){
-    const memo = "Ayasofya Charity Bağışı";
-    const url = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
-
-    if(window.Pi){ // Pi DApp ortamında Pi Browser tespit
-        window.location.href = url;
-    } else {
-        alert("Bağış yapmak için Pi Browser üzerinden açın.");
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      text-align: center;
     }
 
-    showReceipt(amount + " Pi");
-}
+    header {
+      background-color: #d4af37;
+      color: white;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
 
-function customDonation(){
-    let amount = prompt("Ne kadar Pi bağışlamak istiyorsunuz?");
-    if(amount) sendPi(amount);
-}
+    main {
+      padding: 40px 20px;
+    }
 
-function showReceipt(amount){
-    const r = document.getElementById('receipt');
-    const date = new Date().toLocaleString('tr-TR');
-    r.innerHTML = `<strong>Teşekkürler!</strong><br>${amount} bağışladınız 💜<br><small>${date}</small>`;
-    r.style.display = 'block';
-    setTimeout(()=>r.style.display='none',3000);
-}
-</script>
+    button {
+      background-color: #d4af37;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #b9962d;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    img.logo {
+      width: 120px;
+      height: auto;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Ayasofya Charity</header>
+
+  <main>
+    <img src="images/logo.png" alt="Ayasofya Charity Logo" class="logo">
+    <h2>Pi Network Ekosisteminde Hayır İçin Birlikteyiz</h2>
+    <p>Ayasofya Charity, Pi Network topluluğunda gönüllü bağışları merkeziyetsiz şekilde toplar.</p>
+    
+    <button onclick="window.location.href='https://minepi.com/'">1 Pi ile Bağış Yap</button>
+  </main>
+
+  <footer>
+    © 2025 Ayasofya Charity • 
+    <a href="privacy.html">Gizlilik Politikası</a> • 
+    <a href="terms.html">Hizmet Şartları</a>
+  </footer>
+
 </body>
 </html>
