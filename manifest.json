@@ -1,7 +1,7 @@
 {
-  "name": "Ayasofya Charity",
+  "name": "Ayasofya Vakfı",
   "short_name": "Ayasofya",
-  "description": "A decentralized charity DApp built for the Pi Network ecosystem.",
+  "description": "Pi Network ekosistemi için oluşturulmuş merkezi olmayan bir hayır kurumu DApp'i.",
   "start_url": "/ayasofyacharity-new/",
   "display": "standalone",
   "background_color": "#ffffff",
