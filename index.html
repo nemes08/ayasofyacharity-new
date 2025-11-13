@@ -8,7 +8,7 @@
   <!-- Uygulama simgesi -->
   <link rel="icon" href="images/logo.png" type="image/png">
 
-  <!-- Manifest dosyası bağlantısı -->
+  <!-- Manifest dosyası -->
   <link rel="manifest" href="manifest.json">
 
   <!-- Tema renkleri -->
@@ -71,16 +71,33 @@
 
 <div class="receipt" id="receipt"></div>
 
+<!-- Pi SDK Entegrasyonu -->
+<script src="https://sdk.minepi.com/pi.js"></script>
 <script>
+  // Pi Browser kontrolü
+  const isPiBrowser = navigator.userAgent.includes("PiBrowser");
+  const sandbox = true; // Sandbox testi için true, mainnet'te false yap
+
+  if(isPiBrowser) {
+    Pi.init({ version: "2.0", sandbox });
+    Pi.authenticate().then(user => {
+      console.log("Pi kullanıcı giriş yaptı:", user);
+    }).catch(err => {
+      console.log("Pi auth hatası:", err);
+      const n = document.getElementById('notification');
+      n.innerText = "Pi giriş hatası: " + err;
+      n.style.display = 'block';
+    });
+  }
+
   const recipient = "uur1453";
+
   function sendPi(amount) {
     const memo = "Ayasofya Charity Bağışı";
-    const url = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
-
-    if(navigator.userAgent.includes("PiBrowser")) {
+    if(isPiBrowser) {
+      const url = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
       window.location.href = url;
     } else {
-      // Normal tarayıcı mesaj kutusu
       const n = document.getElementById('notification');
       n.innerText = "Bağışı gerçekleştirmek için lütfen Pi Browser veya Pi Wallet kullanın.";
       n.style.display = 'block';
