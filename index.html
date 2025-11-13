@@ -7,11 +7,8 @@
 
   <!-- Uygulama simgesi -->
   <link rel="icon" href="images/logo.png" type="image/png">
-
-  <!-- Manifest dosyası -->
   <link rel="manifest" href="manifest.json">
 
-  <!-- Tema renkleri -->
   <meta name="theme-color" content="#d4af37">
   <meta name="background-color" content="#ffffff">
 
@@ -22,9 +19,11 @@
     @keyframes pulse { 0%,100%{transform:scale(1);}50%{transform:scale(1.08);} }
     h1 { font-size:26px; margin:10px 0; }
     p { color:#555; }
-    .donation-section { margin-top:20px; }
+    #userName { font-weight:bold; color:#7b4bff; margin-bottom:10px; }
+    .donation-section { margin-top:20px; display:flex; flex-wrap:wrap; justify-content:center; }
     button { background-color:#7b4bff; color:white; border:none; border-radius:8px; padding:10px 16px; margin:5px; font-size:15px; cursor:pointer; transition: transform 0.2s; }
     button:hover { transform:scale(1.05); }
+    select { padding:8px 12px; margin:5px; border-radius:6px; font-size:15px; }
     footer { margin-top:30px; font-size:14px; color:#777; }
     .socials a { margin:0 5px; text-decoration:none; font-size:22px; }
     .receipt { position:fixed; bottom:40px; right:20px; background:#fff; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,0.1); padding:16px 20px; display:none; animation:fadeIn 0.4s ease forwards; }
@@ -40,16 +39,22 @@
   <img src="images/logo.png" alt="Ayasofya Charity Logosu" class="logo">
   <div class="heart">💜</div>
   <h1>Ayasofya Charity</h1>
+  <p id="userName"></p>
   <p>İhtiyaç sahiplerine destek — Pi Network üzerinden şeffaf bağış</p>
 </header>
 
 <section class="donation-section">
   <h2>Bağış Yap</h2>
   <div>
-    <button onclick="sendPi('1')">1 Pi</button>
-    <button onclick="sendPi('5')">5 Pi</button>
-    <button onclick="sendPi('10')">10 Pi</button>
-    <button onclick="customDonation()">Bağışı Gönder</button>
+    <select id="donationAmount">
+      <option value="1">1 Pi</option>
+      <option value="5">5 Pi</option>
+      <option value="10">10 Pi</option>
+      <option value="20">20 Pi</option>
+      <option value="50">50 Pi</option>
+    </select>
+    <button onclick="sendSelectedPi()">Bağışı Gönder</button>
+    <button onclick="customDonation()">Özel Miktar</button>
   </div>
 </section>
 
@@ -71,17 +76,19 @@
 
 <div class="receipt" id="receipt"></div>
 
-<!-- Pi SDK Entegrasyonu -->
+<!-- Pi SDK -->
 <script src="https://sdk.minepi.com/pi.js"></script>
 <script>
-  // Pi Browser kontrolü
   const isPiBrowser = navigator.userAgent.includes("PiBrowser");
-  const sandbox = true; // Sandbox testi için true, mainnet'te false yap
+  const sandbox = true; // test modunda true, mainnet'te false
 
+  let currentUser = null;
   if(isPiBrowser) {
     Pi.init({ version: "2.0", sandbox });
     Pi.authenticate().then(user => {
+      currentUser = user;
       console.log("Pi kullanıcı giriş yaptı:", user);
+      document.getElementById('userName').innerText = "Hoşgeldin, " + user.username;
     }).catch(err => {
       console.log("Pi auth hatası:", err);
       const n = document.getElementById('notification');
@@ -105,6 +112,11 @@
     showReceipt(amount + " Pi");
   }
 
+  function sendSelectedPi() {
+    const amount = document.getElementById('donationAmount').value;
+    sendPi(amount);
+  }
+
   function customDonation() {
     let amount = prompt("Ne kadar Pi bağışlamak istiyorsunuz?");
     if(amount) sendPi(amount);
@@ -113,7 +125,8 @@
   function showReceipt(amount) {
     const r = document.getElementById('receipt');
     const date = new Date().toLocaleString('tr-TR');
-    r.innerHTML = `<strong>Teşekkürler!</strong><br>${amount} bağışladınız 💜<br><small>${date}</small>`;
+    let emoji = amount <= 5 ? "💜" : amount <= 10 ? "💖" : "💎";
+    r.innerHTML = `<strong>Teşekkürler!</strong><br>${amount} bağışladınız ${emoji}<br><small>${date}</small>`;
     r.style.display = 'block';
     setTimeout(() => r.style.display = 'none', 3000);
   }
