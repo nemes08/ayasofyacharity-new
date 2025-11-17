@@ -54,8 +54,8 @@
     <button onclick="sendSelectedPi()">Bağışı Gönder</button>
     <button onclick="customDonation()">Özel Miktar</button>
 
-    <!-- Düzeltilmiş 0.01 Bağış Butonu -->
-    <a href="pi://piwallet/pay?recipient=uur1453&amount=0.01&memo=Test+Bağış"
+    <!-- 0.01 Pi Gönder Butonu -->
+    <a href="pi://wallet/pay?recipient=uur1453&amount=0.01&memo=Test+Bağış"
        style="display:inline-block;padding:10px 15px;background:#6b45e8;color:white;border-radius:10px;text-decoration:none;font-weight:bold;margin-left:10px;">
       0.01 PI Gönder
     </a>
@@ -82,18 +82,16 @@
 
 <script>
   const isPiBrowser = navigator.userAgent.includes("PiBrowser");
-  const sandbox = true; // Test Modu
+  const sandbox = true; // TEST modu
 
   let currentUser = null;
 
-  if(isPiBrowser){
-    if (window.Pi) {
-      Pi.init({ version: "2.0", sandbox });
-      Pi.authenticate().then(user => {
-        currentUser = user;
-        document.getElementById("userName").innerText = "Hoşgeldin, " + user.username;
-      }).catch(() => {});
-    }
+  if(isPiBrowser && window.Pi){
+    Pi.init({ version: "2.0", sandbox });
+    Pi.authenticate().then(user => {
+      currentUser = user;
+      document.getElementById("userName").innerText = "Hoşgeldin, " + user.username;
+    }).catch(() => {});
   }
 
   const recipient = "uur1453";
@@ -101,7 +99,7 @@
   function sendPi(amount){
     const memo = "Ayasofya Charity Bağışı";
     window.location.href =
-      `pi://piwallet/pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
+      `pi://wallet/pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
     showReceipt(amount + " Pi");
   }
 
