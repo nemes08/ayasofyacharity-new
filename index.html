@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayasofya Charity</title>
 
-  <!-- Uygulama simgesi -->
   <link rel="icon" href="images/logo.png" type="image/png">
   <link rel="manifest" href="manifest.json">
-
   <meta name="theme-color" content="#d4af37">
   <meta name="background-color" content="#ffffff">
 
@@ -34,10 +32,6 @@
   </style>
 </head>
 <body>
-  <a href="pi://piwallet/pay?recipient=uur1453&amount=0.01"
-   style="display:inline-block;padding:10px 15px;background:#6b45e8;color:white;border-radius:10px;text-decoration:none;font-weight:bold;">
-  0.01 PI Gönder
-</a>
 
 <header>
   <img src="images/logo.png" alt="Ayasofya Charity Logosu" class="logo">
@@ -59,6 +53,12 @@
     </select>
     <button onclick="sendSelectedPi()">Bağışı Gönder</button>
     <button onclick="customDonation()">Özel Miktar</button>
+
+    <!-- 0.01 Pi Gönder Butonu -->
+    <a href="pi://piwallet/pay?recipient=uur1453&amount=0.01"
+       style="display:inline-block;padding:10px 15px;background:#6b45e8;color:white;border-radius:10px;text-decoration:none;font-weight:bold;margin-left:10px;">
+      0.01 PI Gönder
+    </a>
   </div>
 </section>
 
@@ -80,21 +80,18 @@
 
 <div class="receipt" id="receipt"></div>
 
-<!-- Pi SDK -->
 <script src="https://sdk.minepi.com/pi.js"></script>
 <script>
   const isPiBrowser = navigator.userAgent.includes("PiBrowser");
-  const sandbox = false; // test modunda true, mainnet'te false
+  const sandbox = false; // mainnet için
 
   let currentUser = null;
   if(isPiBrowser) {
     Pi.init({ version: "2.0", sandbox });
     Pi.authenticate().then(user => {
       currentUser = user;
-      console.log("Pi kullanıcı giriş yaptı:", user);
       document.getElementById('userName').innerText = "Hoşgeldin, " + user.username;
     }).catch(err => {
-      console.log("Pi auth hatası:", err);
       const n = document.getElementById('notification');
       n.innerText = "Pi giriş hatası: " + err;
       n.style.display = 'block';
@@ -106,11 +103,10 @@
   function sendPi(amount) {
     const memo = "Ayasofya Charity Bağışı";
     if(isPiBrowser) {
-      const url = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
-      window.location.href = url;
+      window.location.href = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
     } else {
       const n = document.getElementById('notification');
-      n.innerText = "Bağışı gerçekleştirmek için lütfen Pi Browser veya Pi Wallet kullanın.";
+      n.innerText = "Bağışı gerçekleştirmek için Pi Browser veya Pi Wallet kullanın.";
       n.style.display = 'block';
     }
     showReceipt(amount + " Pi");
