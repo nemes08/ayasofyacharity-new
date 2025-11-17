@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ayasofya Charity</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayasofya Charity</title>
 
-<link rel="icon" href="images/logo.png" type="image/png">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#d4af37">
-<meta name="background-color" content="#ffffff">
+  <link rel="icon" href="images/logo.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d4af37">
+  <meta name="background-color" content="#ffffff">
 
-<style>
-body { font-family: 'Segoe UI', sans-serif; margin:0; padding:0; text-align:center; background:#fdfdfd; color:#222; }
-header { padding:20px; }
-.logo { width:160px; height:auto; margin-bottom:10px; animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{transform:scale(1);}50%{transform:scale(1.08);} }
-h1 { font-size:26px; margin:10px 0; }
-p { color:#555; }
-#userName { font-weight:bold; color:#7b4bff; margin-bottom:10px; }
-.donation-section { margin-top:20px; display:flex; flex-wrap:wrap; justify-content:center; }
-button { background-color:#7b4bff; color:white; border:none; border-radius:8px; padding:10px 16px; margin:5px; font-size:15px; cursor:pointer; transition: transform 0.2s; }
-button:hover { transform:scale(1.05); }
-select { padding:8px 12px; margin:5px; border-radius:6px; font-size:15px; }
-footer { margin-top:30px; font-size:14px; color:#777; }
-.socials a { margin:0 5px; text-decoration:none; font-size:22px; }
-.receipt { position:fixed; bottom:40px; right:20px; background:#fff; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,0.1); padding:16px 20px; display:none; animation:fadeIn 0.4s ease forwards; }
-@keyframes fadeIn { from{transform:translateY(20px);opacity:0;} to{transform:translateY(0);opacity:1;} }
-.heart { color:#ff3b7a; font-size:30px; animation:beat 1.3s infinite; }
-@keyframes beat { 0%,40%,80%,100%{transform:scale(1);} 20%,60%{transform:scale(1.3);} }
-#notification { margin:20px; padding:10px; background:#fffae6; border:1px solid #e0c080; border-radius:8px; display:none; }
-</style>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; margin:0; padding:0; text-align:center; background:#fdfdfd; color:#222; }
+    header { padding:20px; }
+    .logo { width:160px; height:auto; margin-bottom:10px; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1);}50%{transform:scale(1.08);} }
+    h1 { font-size:26px; margin:10px 0; }
+    p { color:#555; }
+    #userName { font-weight:bold; color:#7b4bff; margin-bottom:10px; }
+    .donation-section { margin-top:20px; display:flex; flex-wrap:wrap; justify-content:center; }
+    button { background-color:#7b4bff; color:white; border:none; border-radius:8px; padding:10px 16px; margin:5px; font-size:15px; cursor:pointer; transition: transform 0.2s; }
+    button:hover { transform:scale(1.05); }
+    select { padding:8px 12px; margin:5px; border-radius:6px; font-size:15px; }
+    footer { margin-top:30px; font-size:14px; color:#777; }
+    .socials a { margin:0 5px; text-decoration:none; font-size:22px; }
+    .receipt { position:fixed; bottom:40px; right:20px; background:#fff; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,0.1); padding:16px 20px; display:none; animation:fadeIn 0.4s ease forwards; }
+    @keyframes fadeIn { from{transform:translateY(20px);opacity:0;} to{transform:translateY(0);opacity:1;} }
+    .heart { color:#ff3b7a; font-size:30px; animation:beat 1.3s infinite; }
+    @keyframes beat { 0%,40%,80%,100%{transform:scale(1);} 20%,60%{transform:scale(1.3);} }
+    #notification { margin:20px; padding:10px; background:#fffae6; border:1px solid #e0c080; border-radius:8px; display:none; }
+    .pi-button { display:inline-block;padding:10px 15px;background:#6b45e8;color:white;border-radius:10px;text-decoration:none;font-weight:bold;margin-left:10px; }
+  </style>
 </head>
 <body>
 
@@ -54,9 +55,8 @@ footer { margin-top:30px; font-size:14px; color:#777; }
     <button onclick="sendSelectedPi()">Bağışı Gönder</button>
     <button onclick="customDonation()">Özel Miktar</button>
 
-    <!-- 0.01 Pi Gönder Butonu -->
-    <a href="pi://pay?recipient=uur1453&amount=0.01&memo=Test+Bağış"
-       style="display:inline-block;padding:10px 15px;background:#6b45e8;color:white;border-radius:10px;text-decoration:none;font-weight:bold;margin-left:10px;">
+    <!-- Mainnet uyumlu 0.01 Pi Gönder Butonu -->
+    <a href="pi://pay?recipient=uur1453&amount=0.01&memo=Test+Bağış" class="pi-button">
       0.01 PI Gönder
     </a>
   </div>
@@ -65,73 +65,72 @@ footer { margin-top:30px; font-size:14px; color:#777; }
 <div id="notification"></div>
 
 <section class="socials">
-<h3>Destekle & Paylaş</h3>
-<a href="https://x.com/uursemen2" target="_blank">🕊️</a>
-<a href="https://facebook.com/share/1ZeKpjp33v" target="_blank">📘</a>
-<a href="https://t.me/uur1453" target="_blank">💬</a>
-<a href="https://instagram.com/uursemen08" target="_blank">📸</a>
-<a href="https://tiktok.com/@semenuur" target="_blank">🎵</a>
-<a href="https://youtube.com/@uursemen08" target="_blank">▶️</a>
+  <h3>Destekle & Paylaş</h3>
+  <a href="https://x.com/uursemen2" target="_blank">🕊️</a>
+  <a href="https://facebook.com/share/1ZeKpjp33v" target="_blank">📘</a>
+  <a href="https://t.me/uur1453" target="_blank">💬</a>
+  <a href="https://instagram.com/uursemen08" target="_blank">📸</a>
+  <a href="https://tiktok.com/@semenuur" target="_blank">🎵</a>
+  <a href="https://youtube.com/@uursemen08" target="_blank">▶️</a>
 </section>
 
 <footer>
-© 2025 Ayasofya Charity | Tüm hakları saklıdır
+  © 2025 Ayasofya Charity | Tüm hakları saklıdır
 </footer>
 
 <div class="receipt" id="receipt"></div>
 
-<!-- Pi SDK -->
 <script src="https://sdk.minepi.com/pi.js"></script>
 <script>
-const isPiBrowser = navigator.userAgent.includes("PiBrowser");
-const sandbox = false; // Mainnet modu
+  const isPiBrowser = navigator.userAgent.includes("PiBrowser");
+  const sandbox = false; // Mainnet
 
-let currentUser = null;
+  let currentUser = null;
 
-if(isPiBrowser && window.Pi){
-  Pi.init({ version: "2.0", sandbox });
-  Pi.authenticate().then(user => {
-    currentUser = user;
-    document.getElementById('userName').innerText = "Hoşgeldin, " + user.username;
-  }).catch(err => {
-    const n = document.getElementById('notification');
-    n.innerText = "Pi giriş hatası: " + err;
-    n.style.display = 'block';
-  });
-}
-
-const recipient = "uur1453";
-
-function sendPi(amount){
-  const memo = "Ayasofya Charity Bağışı";
-  if(isPiBrowser){
-    window.location.href = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
-  } else {
-    const n = document.getElementById('notification');
-    n.innerText = "Bağışı gerçekleştirmek için Pi Browser veya Pi Wallet kullanın.";
-    n.style.display = 'block';
+  if(isPiBrowser && window.Pi){
+    Pi.init({ version: "2.0", sandbox });
+    Pi.authenticate().then(user => {
+      currentUser = user;
+      document.getElementById("userName").innerText = "Hoşgeldin, " + user.username;
+    }).catch(err => {
+      const n = document.getElementById("notification");
+      n.innerText = "Pi giriş hatası: " + err;
+      n.style.display = "block";
+    });
   }
-  showReceipt(amount + " Pi");
-}
 
-function sendSelectedPi(){
-  const amount = document.getElementById('donationAmount').value;
-  sendPi(amount);
-}
+  const recipient = "uur1453";
 
-function customDonation(){
-  let amount = prompt("Ne kadar Pi bağışlamak istiyorsunuz?");
-  if(amount) sendPi(amount);
-}
+  function sendPi(amount){
+    const memo = "Ayasofya Charity Bağışı";
+    if(isPiBrowser){
+      window.location.href = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
+    } else {
+      const n = document.getElementById("notification");
+      n.innerText = "Bağışı gerçekleştirmek için Pi Browser veya Pi Wallet kullanın.";
+      n.style.display = "block";
+    }
+    showReceipt(amount + " Pi");
+  }
 
-function showReceipt(amount){
-  const r = document.getElementById('receipt');
-  const date = new Date().toLocaleString("tr-TR");
-  let emoji = amount <= 5 ? "💜" : amount <= 10 ? "💖" : "💎";
-  r.innerHTML = `<strong>Teşekkürler!</strong><br>${amount} bağışladınız ${emoji}<br><small>${date}</small>`;
-  r.style.display = 'block';
-  setTimeout(() => r.style.display = 'none', 3000);
-}
+  function sendSelectedPi(){
+    const amount = document.getElementById("donationAmount").value;
+    sendPi(amount);
+  }
+
+  function customDonation(){
+    let amount = prompt("Ne kadar Pi bağışlamak istiyorsunuz?");
+    if(amount) sendPi(amount);
+  }
+
+  function showReceipt(amount){
+    const r = document.getElementById("receipt");
+    const date = new Date().toLocaleString("tr-TR");
+    let emoji = amount <= 5 ? "💜" : amount <= 10 ? "💖" : "💎";
+    r.innerHTML = `<strong>Teşekkürler!</strong><br>${amount} bağışladınız ${emoji}<br><small>${date}</small>`;
+    r.style.display = "block";
+    setTimeout(() => r.style.display = "none", 3000);
+  }
 </script>
 
 </body>
