@@ -4,12 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ayasofya Charity</title>
+
 <link rel="icon" href="images/logo.png" type="image/png">
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#d4af37">
 <meta name="background-color" content="#ffffff">
 
 <style>
-body { font-family:'Segoe UI',sans-serif; margin:0; padding:0; text-align:center; background:#fdfdfd; color:#222; }
+body { font-family: 'Segoe UI', sans-serif; margin:0; padding:0; text-align:center; background:#fdfdfd; color:#222; }
 header { padding:20px; }
 .logo { width:160px; height:auto; margin-bottom:10px; animation:pulse 2s infinite; }
 @keyframes pulse { 0%,100%{transform:scale(1);}50%{transform:scale(1.08);} }
@@ -32,35 +34,32 @@ footer { margin-top:30px; font-size:14px; color:#777; }
 <body>
 
 <header>
-<img src="images/logo.png" alt="Ayasofya Charity Logosu" class="logo">
-<div class="heart">💜</div>
-<h1>Ayasofya Charity</h1>
-<p id="userName"></p>
-<p>İhtiyaç sahiplerine destek — Pi Network üzerinden şeffaf bağış</p>
+  <img src="images/logo.png" alt="Ayasofya Charity Logosu" class="logo">
+  <div class="heart">💜</div>
+  <h1>Ayasofya Charity</h1>
+  <p id="userName"></p>
+  <p>İhtiyaç sahiplerine destek — Pi Network üzerinden şeffaf bağış</p>
 </header>
 
 <section class="donation-section">
-<h2>Bağış Yap</h2>
-<div>
-<select id="donationAmount">
-<option value="1">1 Pi</option>
-<option value="5">5 Pi</option>
-<option value="10">10 Pi</option>
-<option value="20">20 Pi</option>
-<option value="50">50 Pi</option>
-</select>
-<button onclick="sendSelectedPi()">Bağışı Gönder</button>
-<button onclick="customDonation()">Özel Miktar</button>
+  <h2>Bağış Yap</h2>
+  <div>
+    <select id="donationAmount">
+      <option value="1">1 Pi</option>
+      <option value="5">5 Pi</option>
+      <option value="10">10 Pi</option>
+      <option value="20">20 Pi</option>
+      <option value="50">50 Pi</option>
+    </select>
+    <button onclick="sendSelectedPi()">Bağışı Gönder</button>
+    <button onclick="customDonation()">Özel Miktar</button>
 
-<!-- 0.01 Pi Butonu -->
-<a href="#" id="smallDonateBtn" 
-style="display:inline-block;padding:10px 15px;background:#6b45e8;color:white;border-radius:10px;text-decoration:none;font-weight:bold;margin-left:10px;">
-0.01 PI Gönder
-</a>
-
-<!-- Sandbox/Mainnet Geçiş Butonu -->
-<button id="toggleSandboxBtn" style="background:#ff7f50;">Mod: TEST</button>
-</div>
+    <!-- 0.01 Pi Gönder Butonu -->
+    <a href="pi://pay?recipient=uur1453&amount=0.01&memo=Test+Bağış"
+       style="display:inline-block;padding:10px 15px;background:#6b45e8;color:white;border-radius:10px;text-decoration:none;font-weight:bold;margin-left:10px;">
+      0.01 PI Gönder
+    </a>
+  </div>
 </section>
 
 <div id="notification"></div>
@@ -81,59 +80,57 @@ style="display:inline-block;padding:10px 15px;background:#6b45e8;color:white;bor
 
 <div class="receipt" id="receipt"></div>
 
+<!-- Pi SDK -->
 <script src="https://sdk.minepi.com/pi.js"></script>
 <script>
-let sandbox = true; // Başlangıçta test modu
-const recipient = "uur1453";
 const isPiBrowser = navigator.userAgent.includes("PiBrowser");
+const sandbox = false; // Mainnet modu
+
 let currentUser = null;
 
 if(isPiBrowser && window.Pi){
-  Pi.init({version:"2.0", sandbox});
-  Pi.authenticate().then(user=>{
+  Pi.init({ version: "2.0", sandbox });
+  Pi.authenticate().then(user => {
     currentUser = user;
-    document.getElementById("userName").innerText = "Hoşgeldin, "+user.username;
-  }).catch(err=>{
-    document.getElementById("notification").innerText = "Pi giriş hatası: "+err;
-    document.getElementById("notification").style.display = "block";
+    document.getElementById('userName').innerText = "Hoşgeldin, " + user.username;
+  }).catch(err => {
+    const n = document.getElementById('notification');
+    n.innerText = "Pi giriş hatası: " + err;
+    n.style.display = 'block';
   });
 }
 
+const recipient = "uur1453";
+
 function sendPi(amount){
-  const memo="Ayasofya Charity Bağışı";
-  window.location.href = `pi://piwallet/pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
-  showReceipt(amount+" Pi");
+  const memo = "Ayasofya Charity Bağışı";
+  if(isPiBrowser){
+    window.location.href = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
+  } else {
+    const n = document.getElementById('notification');
+    n.innerText = "Bağışı gerçekleştirmek için Pi Browser veya Pi Wallet kullanın.";
+    n.style.display = 'block';
+  }
+  showReceipt(amount + " Pi");
 }
 
 function sendSelectedPi(){
-  const amount=document.getElementById("donationAmount").value;
+  const amount = document.getElementById('donationAmount').value;
   sendPi(amount);
 }
 
 function customDonation(){
-  let amount=prompt("Ne kadar Pi bağışlamak istiyorsunuz?");
+  let amount = prompt("Ne kadar Pi bağışlamak istiyorsunuz?");
   if(amount) sendPi(amount);
 }
 
-// 0.01 Pi butonu
-document.getElementById("smallDonateBtn").onclick = ()=>{
-  sendPi(0.01);
-}
-
-// Sandbox/Mainnet toggle
-document.getElementById("toggleSandboxBtn").onclick = ()=>{
-  sandbox = !sandbox;
-  document.getElementById("toggleSandboxBtn").innerText = sandbox ? "Mod: TEST" : "Mod: MAIN";
-  alert("Mod değiştirildi: "+(sandbox ? "TEST" : "MAIN"));
-}
-
 function showReceipt(amount){
-  const r = document.getElementById("receipt");
+  const r = document.getElementById('receipt');
   const date = new Date().toLocaleString("tr-TR");
-  let emoji = amount <=5 ? "💜" : amount <=10 ? "💖" : "💎";
+  let emoji = amount <= 5 ? "💜" : amount <= 10 ? "💖" : "💎";
   r.innerHTML = `<strong>Teşekkürler!</strong><br>${amount} bağışladınız ${emoji}<br><small>${date}</small>`;
-  r.style.display="block";
-  setTimeout(()=>r.style.display="none",3000);
+  r.style.display = 'block';
+  setTimeout(() => r.style.display = 'none', 3000);
 }
 </script>
 
