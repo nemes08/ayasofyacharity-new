@@ -55,7 +55,7 @@
     <button onclick="customDonation()">Özel Miktar</button>
 
     <!-- 0.01 Pi Gönder Butonu -->
-    <a href="pi://piwallet/pay?recipient=uur1453&amount=0.01"
+    <a href="pi://pay?recipient=uur1453&amount=0.01&memo=Test+Bağış"
        style="display:inline-block;padding:10px 15px;background:#6b45e8;color:white;border-radius:10px;text-decoration:none;font-weight:bold;margin-left:10px;">
       0.01 PI Gönder
     </a>
@@ -83,7 +83,7 @@
 <script src="https://sdk.minepi.com/pi.js"></script>
 <script>
   const isPiBrowser = navigator.userAgent.includes("PiBrowser");
-  const sandbox = true; // mainnet için
+  const sandbox = true; // TEST modu için
 
   let currentUser = null;
   if(isPiBrowser) {
