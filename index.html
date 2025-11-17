@@ -55,7 +55,7 @@
     <button onclick="customDonation()">Özel Miktar</button>
 
     <!-- 0.01 Pi Gönder Butonu -->
-    <a href="pi://wallet/pay?recipient=uur1453&amount=0.01&memo=Test+Bağış"
+    <a href="#" id="send01Pi"
        style="display:inline-block;padding:10px 15px;background:#6b45e8;color:white;border-radius:10px;text-decoration:none;font-weight:bold;margin-left:10px;">
       0.01 PI Gönder
     </a>
@@ -82,24 +82,31 @@
 
 <script>
   const isPiBrowser = navigator.userAgent.includes("PiBrowser");
-  const sandbox = true; // TEST modu
+  const sandbox = true; // Test modu: true, Mainnet: false
 
   let currentUser = null;
+  const recipient = "uur1453";
 
   if(isPiBrowser && window.Pi){
     Pi.init({ version: "2.0", sandbox });
     Pi.authenticate().then(user => {
       currentUser = user;
       document.getElementById("userName").innerText = "Hoşgeldin, " + user.username;
-    }).catch(() => {});
+    }).catch(err=>{
+      document.getElementById("notification").innerText = "Pi auth hatası: " + err;
+      document.getElementById("notification").style.display="block";
+    });
   }
 
-  const recipient = "uur1453";
-
   function sendPi(amount){
+    if(!isPiBrowser){
+      const n = document.getElementById("notification");
+      n.innerText = "Bağışı gerçekleştirmek için Pi Browser veya Pi Wallet kullanın.";
+      n.style.display = "block";
+      return;
+    }
     const memo = "Ayasofya Charity Bağışı";
-    window.location.href =
-      `pi://wallet/pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
+    window.location.href = `pi://wallet/pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
     showReceipt(amount + " Pi");
   }
 
@@ -119,8 +126,13 @@
     let emoji = amount <= 5 ? "💜" : amount <= 10 ? "💖" : "💎";
     r.innerHTML = `<strong>Teşekkürler!</strong><br>${amount} bağışladınız ${emoji}<br><small>${date}</small>`;
     r.style.display = "block";
-    setTimeout(() => r.style.display = "none", 3000);
+    setTimeout(()=>r.style.display="none",3000);
   }
+
+  // 0.01 Pi butonu tıklama
+  document.getElementById("send01Pi").addEventListener("click", ()=>{
+    sendPi(0.01);
+  });
 </script>
 
 </body>
