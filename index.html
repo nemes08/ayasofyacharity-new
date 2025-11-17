@@ -54,8 +54,8 @@
     <button onclick="sendSelectedPi()">Bağışı Gönder</button>
     <button onclick="customDonation()">Özel Miktar</button>
 
-    <!-- 0.01 Pi Gönder Butonu -->
-    <a href="pi://pay?recipient=uur1453&amount=0.01&memo=Test+Bağış"
+    <!-- Düzeltilmiş 0.01 Bağış Butonu -->
+    <a href="pi://piwallet/pay?recipient=uur1453&amount=0.01&memo=Test+Bağış"
        style="display:inline-block;padding:10px 15px;background:#6b45e8;color:white;border-radius:10px;text-decoration:none;font-weight:bold;margin-left:10px;">
       0.01 PI Gönder
     </a>
@@ -80,55 +80,48 @@
 
 <div class="receipt" id="receipt"></div>
 
-<script src="https://sdk.minepi.com/pi.js"></script>
 <script>
   const isPiBrowser = navigator.userAgent.includes("PiBrowser");
-  const sandbox = true; // TEST modu için
+  const sandbox = true; // Test Modu
 
   let currentUser = null;
-  if(isPiBrowser) {
-    Pi.init({ version: "2.0", sandbox });
-    Pi.authenticate().then(user => {
-      currentUser = user;
-      document.getElementById('userName').innerText = "Hoşgeldin, " + user.username;
-    }).catch(err => {
-      const n = document.getElementById('notification');
-      n.innerText = "Pi giriş hatası: " + err;
-      n.style.display = 'block';
-    });
+
+  if(isPiBrowser){
+    if (window.Pi) {
+      Pi.init({ version: "2.0", sandbox });
+      Pi.authenticate().then(user => {
+        currentUser = user;
+        document.getElementById("userName").innerText = "Hoşgeldin, " + user.username;
+      }).catch(() => {});
+    }
   }
 
   const recipient = "uur1453";
 
-  function sendPi(amount) {
+  function sendPi(amount){
     const memo = "Ayasofya Charity Bağışı";
-    if(isPiBrowser) {
-      window.location.href = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
-    } else {
-      const n = document.getElementById('notification');
-      n.innerText = "Bağışı gerçekleştirmek için Pi Browser veya Pi Wallet kullanın.";
-      n.style.display = 'block';
-    }
+    window.location.href =
+      `pi://piwallet/pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
     showReceipt(amount + " Pi");
   }
 
-  function sendSelectedPi() {
-    const amount = document.getElementById('donationAmount').value;
+  function sendSelectedPi(){
+    const amount = document.getElementById("donationAmount").value;
     sendPi(amount);
   }
 
-  function customDonation() {
+  function customDonation(){
     let amount = prompt("Ne kadar Pi bağışlamak istiyorsunuz?");
     if(amount) sendPi(amount);
   }
 
-  function showReceipt(amount) {
-    const r = document.getElementById('receipt');
-    const date = new Date().toLocaleString('tr-TR');
+  function showReceipt(amount){
+    const r = document.getElementById("receipt");
+    const date = new Date().toLocaleString("tr-TR");
     let emoji = amount <= 5 ? "💜" : amount <= 10 ? "💖" : "💎";
     r.innerHTML = `<strong>Teşekkürler!</strong><br>${amount} bağışladınız ${emoji}<br><small>${date}</small>`;
-    r.style.display = 'block';
-    setTimeout(() => r.style.display = 'none', 3000);
+    r.style.display = "block";
+    setTimeout(() => r.style.display = "none", 3000);
   }
 </script>
 
