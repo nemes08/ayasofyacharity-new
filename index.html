@@ -98,11 +98,11 @@
     <h2>Bağış Yap</h2>
     <p>✅ Valide köprülenebilir!</p>
     <div>
-      <button onclick="showReceipt('0.1 Pi')">0.1 Pi</button>
-      <button onclick="showReceipt('1 Pi')">1 Pi</button>
-      <button onclick="showReceipt('5 Pi')">5 Pi</button>
-      <button onclick="showReceipt('10 Pi')">10 Pi</button>
-      <button onclick="showReceipt('Özel Miktar')">Bağışı Gönder</button>
+      <button onclick="sendPiPayment(0.1)">0.1 Pi</button>
+      <button onclick="sendPiPayment(1)">1 Pi</button>
+      <button onclick="sendPiPayment(5)">5 Pi</button>
+      <button onclick="sendPiPayment(10)">10 Pi</button>
+      <button onclick="sendPiPayment('custom')">Bağışı Gönder</button>
     </div>
   </section>
 
@@ -120,16 +120,27 @@
     © 2025 Ayasofya Vakfı | Tüm hakları saklıdır
   </footer>
 
-  <!-- Mini Bağış Fişi -->
   <div class="receipt" id="receipt"></div>
 
   <script>
-    function showReceipt(amount) {
+    function sendPiPayment(amount) {
+      if(amount === 'custom') {
+        amount = prompt("Lütfen bağış miktarını Pi olarak girin:");
+        if(!amount) return;
+      }
+
+      // Mini bağış fişi göster
       const r = document.getElementById('receipt');
       const date = new Date().toLocaleString('tr-TR');
-      r.innerHTML = `<strong>Teşekkürler!</strong><br>${amount} bağışladınız 💜<br><small>${date}</small>`;
+      r.innerHTML = `<strong>Teşekkürler!</strong><br>${amount} Pi bağışladınız 💜<br><small>${date}</small>`;
       r.style.display = 'block';
       setTimeout(() => r.style.display = 'none', 3000);
+
+      // Pi Wallet ödeme linki (YOUR_PI_USERNAME yerine kendi Pi kullanıcı adını yaz!)
+      const piLink = `pi://pay?amount=${amount}&recipient=YOUR_PI_USERNAME&memo=AyasofyaBağış`;
+
+      // Pi Browser'da aç
+      window.location.href = piLink;
     }
   </script>
 </body>
