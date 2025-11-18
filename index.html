@@ -60,7 +60,6 @@
       text-decoration: none;
       font-size: 22px;
     }
-    /* 💜 Mini Bağış Fişi */
     .receipt {
       position: fixed;
       bottom: 40px;
@@ -76,7 +75,6 @@
       0% { transform: translateY(20px); opacity: 0; }
       100% { transform: translateY(0); opacity: 1; }
     }
-    /* 💖 Kalp animasyonu */
     .heart {
       color: #ff3b7a;
       font-size: 30px;
@@ -100,6 +98,7 @@
     <h2>Bağış Yap</h2>
     <p>✅ Valide köprülenebilir!</p>
     <div>
+      <button onclick="showReceipt('0.1 Pi')">0.1 Pi</button>
       <button onclick="showReceipt('1 Pi')">1 Pi</button>
       <button onclick="showReceipt('5 Pi')">5 Pi</button>
       <button onclick="showReceipt('10 Pi')">10 Pi</button>
