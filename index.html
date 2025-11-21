@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="tr">
+<!DOCTYPE html><html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,9 +91,7 @@
     <div class="heart">💜</div>
     <h1>Ayasofya Vakfı</h1>
     <p>İhtiyaç sahiplerine destek — Pi Network üzerinden şeffaf bağış</p>
-  </header>
-
-  <section class="donation-section">
+  </header>  <section class="donation-section">
     <h2>Bağış Yap</h2>
     <p>✅ Valide köprülenebilir!</p>
     <div>
@@ -104,9 +101,7 @@
       <button onclick="sendPiPayment(10)">10 Pi</button>
       <button onclick="sendPiPayment('custom')">Bağışı Gönder</button>
     </div>
-  </section>
-
-  <section class="socials">
+  </section>  <section class="socials">
     <h3>Destekle & Paylaş</h3>
     <a href="https://x.com/uursemen2" target="_blank">🕊️</a>
     <a href="https://facebook.com/share/1ZeKpjp33v" target="_blank">📘</a>
@@ -114,34 +109,24 @@
     <a href="https://instagram.com/uursemen08" target="_blank">📸</a>
     <a href="https://tiktok.com/@semenuur" target="_blank">🎵</a>
     <a href="https://youtube.com/@uursemen08" target="_blank">▶️</a>
-  </section>
-
-  <footer>
+  </section>  <footer>
     © 2025 Ayasofya Vakfı | Tüm hakları saklıdır
-  </footer>
-
-  <div class="receipt" id="receipt"></div>
-
-  <script>
+  </footer>  <div class="receipt" id="receipt"></div>  <script>
     function sendPiPayment(amount) {
       if(amount === 'custom') {
         amount = prompt("Lütfen bağış miktarını Pi olarak girin:");
         if(!amount) return;
       }
 
-      // Mini bağış fişi göster
       const r = document.getElementById('receipt');
       const date = new Date().toLocaleString('tr-TR');
       r.innerHTML = `<strong>Teşekkürler!</strong><br>${amount} Pi bağışladınız 💜<br><small>${date}</small>`;
       r.style.display = 'block';
       setTimeout(() => r.style.display = 'none', 3000);
 
-      // Pi Wallet ödeme linki (YOUR_PI_USERNAME yerine kendi Pi kullanıcı adını yaz!)
-      const piLink = `pi://pay?amount=${amount}&recipient=YOUR_PI_USERNAME&memo=AyasofyaBağış`;
+      const piLink = `pi://pay?amount=${amount}&recipient=ugurnemes08&memo=AyasofyaBağış`;
 
-      // Pi Browser'da aç
       window.location.href = piLink;
     }
-  </script>
-</body>
+  </script></body>
 </html>
