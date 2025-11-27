@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayasofya Charity</title>
-
-  <!-- Pi Browser domain doğrulama eklemesi -->
-  <meta name="pi:allowed-domains" content="*.pinet.com">
-
+  
+  <!-- Pi Browser Desteklenen Domain -->
+  <meta name="pinet:allowed-domains" content="*.pinet.com">
+  
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -49,6 +49,7 @@
       text-decoration: none;
       font-size: 22px;
     }
+    /* Mini Bağış Fişi */
     .receipt {
       position: fixed;
       bottom: 40px;
@@ -64,6 +65,7 @@
       from { transform: translateY(20px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
+    /* Kalp animasyonu */
     .heart {
       color: #ff3b7a;
       font-size: 30px;
@@ -76,7 +78,6 @@
   </style>
 </head>
 <body>
-
   <header>
     <img src="images/logo.png" alt="Ayasofya Charity Logosu" class="logo">
     <div class="heart">💜</div>
@@ -109,11 +110,11 @@
     © 2025 Ayasofya Charity | Tüm hakları saklıdır
   </footer>
 
+  <!-- Mini Bağış Fişi -->
   <div class="receipt" id="receipt"></div>
 
   <script>
-    const recipient = "uur1453";
-
+    const recipient = "uur1453"; // Senin Pi Wallet kullanıcı adın
     function sendPi(amount) {
       const memo = "Ayasofya Charity Bağışı";
       const url = `pi://pay?recipient=${recipient}&amount=${amount}&memo=${memo}`;
@@ -124,12 +125,10 @@
       }
       showReceipt(amount + " Pi");
     }
-
     function customDonation() {
       let amount = prompt("Ne kadar Pi bağışlamak istiyorsunuz?");
       if(amount) sendPi(amount);
     }
-
     function showReceipt(amount) {
       const r = document.getElementById('receipt');
       const date = new Date().toLocaleString('tr-TR');
@@ -138,6 +137,5 @@
       setTimeout(() => r.style.display = 'none', 3000);
     }
   </script>
-
 </body>
 </html>
